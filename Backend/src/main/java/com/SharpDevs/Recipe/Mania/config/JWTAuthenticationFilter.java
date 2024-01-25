@@ -1,6 +1,7 @@
 package com.SharpDevs.Recipe.Mania.config;
 
 import com.SharpDevs.Recipe.Mania.Service.JWTService;
+import com.SharpDevs.Recipe.Mania.Service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -23,7 +23,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 private final JWTService jwtService;
 
 private final UserService userService;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     final String authHeader = request.getHeader(("Authorization"));
@@ -38,10 +37,11 @@ private final UserService userService;
     jwt = authHeader.substring(7);
     userEmail = jwtService.extractUserName(jwt);
 
+        UserDetails userDetails = userService.s;
     if(StringUtils.hasLength(userEmail) && SecurityContextHolder.getContext().getAuthentication()== null){
         
-        UserDetails userDetails =
-        SecurityContext securityContext =SecurityContextHolder.createEmptyContext();
+
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.)
     }
     }
