@@ -1,4 +1,4 @@
-package com.example.newsletterupdates.Entity;
+package com.SharpDevs.Recipe.Mania.domain.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
