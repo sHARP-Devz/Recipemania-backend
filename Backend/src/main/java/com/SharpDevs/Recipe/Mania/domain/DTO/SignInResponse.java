@@ -1,6 +1,6 @@
 package com.SharpDevs.Recipe.Mania.domain.DTO;
 
-import com.SharpDevs.Recipe.Mania.domain.Entity.User;
+import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SignInDto {
-    private  User user;
+    private UserEntity userEntity;
     private  String  token;
 }
