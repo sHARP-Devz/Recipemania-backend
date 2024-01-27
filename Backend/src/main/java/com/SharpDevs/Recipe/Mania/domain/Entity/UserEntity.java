@@ -1,7 +1,6 @@
-package com.SharpDevs.Recipe.Mania.Entity;
+package com.SharpDevs.Recipe.Mania.domain.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
