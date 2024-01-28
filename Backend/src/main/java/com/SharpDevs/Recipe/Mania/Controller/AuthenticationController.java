@@ -21,7 +21,7 @@ public class AuthenticationController {
 
     @PostMapping(path="/register")
     public ResponseEntity register(@RequestBody UserDto userDto){
-       return  authenticationService.signUp(userDto);
+       ;return  authenticationService.signUp(userDto);
     }
     @PostMapping(path="/signin")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest){

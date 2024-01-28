@@ -7,7 +7,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.NonNull;
 
-public class UserDto {
+public class    UserDto {
 
     private String firstName;
 

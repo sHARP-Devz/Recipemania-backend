@@ -37,6 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             userRepository.save(userEntity);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch(Exception error){
+            System.out.println(error);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
