@@ -1,14 +1,16 @@
-package com.example.newsletterupdates.Repository;
-
-import com.example.newsletterupdates.DTO.NewsletterDto;
-import com.example.newsletterupdates.Entity.Newsletter;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
-
-public interface NewsletterRepository extends JpaRepository<NewsletterDto, Long> {
-    @Override
-    Optional<NewsletterDto> findById(Long id);
-
-    Optional<Newsletter> findAllEmails(String email);
-}
+//package com.SharpDevs.Recipe.Mania.Repository;
+//
+//import com.SharpDevs.Recipe.Mania.domain.DTO.NewsletterDto;
+//import com.SharpDevs.Recipe.Mania.domain.Entity.NewsletterEntity;
+//import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.stereotype.Repository;
+//
+//import java.util.Optional;
+//
+//@Repository
+//public interface NewsletterRepository extends JpaRepository<NewsletterDto, Long> {
+//    @Override
+//    Optional<NewsletterDto> findById(Long id);
+//
+//    Optional<NewsletterEntity> findAllEmails(String email);
+//}

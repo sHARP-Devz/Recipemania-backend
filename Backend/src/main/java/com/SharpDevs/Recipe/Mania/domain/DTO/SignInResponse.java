@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SignInDto {
+public class SignInResponse {
     private UserEntity userEntity;
     private  String  token;
 }

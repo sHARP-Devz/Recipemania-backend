@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class SignInResponse {
+public class SignInRequest {
     private final String email;
     private final String password;
 }
