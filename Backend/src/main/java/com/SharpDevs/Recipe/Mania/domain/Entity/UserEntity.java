@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name="db_user")
 @NoArgsConstructor
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
 
     @Id
     @Column(name = "user_id")

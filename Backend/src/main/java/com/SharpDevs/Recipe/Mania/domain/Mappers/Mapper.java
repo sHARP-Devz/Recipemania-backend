@@ -1,2 +1,7 @@
-package com.SharpDevs.Recipe.Mania.domain.Mappers;public interface Mapper {
+package com.SharpDevs.Recipe.Mania.domain.Mappers;
+
+public interface Mapper<A,B>{
+    B mapTo(A a);
+
+    A mapFrom(B b);
 }
