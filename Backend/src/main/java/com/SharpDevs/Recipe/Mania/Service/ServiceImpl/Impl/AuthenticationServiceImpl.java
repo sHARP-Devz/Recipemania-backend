@@ -3,9 +3,12 @@ package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.AuthenticationService;
 import com.SharpDevs.Recipe.Mania.Service.JWTService;
-import com.SharpDevs.Recipe.Mania.domain.DTO.SignInResponse;
+import com.SharpDevs.Recipe.Mania.config.PasswordEncoderConfig;
+import com.SharpDevs.Recipe.Mania.domain.DTO.ChangePasswordRequest;
 import com.SharpDevs.Recipe.Mania.domain.DTO.SignInRequest;
+import com.SharpDevs.Recipe.Mania.domain.DTO.SignInResponse;
 import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
+import com.SharpDevs.Recipe.Mania.domain.Entity.Role;
 import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,26 +37,49 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public ResponseEntity signUp(UserDto userDto) {
-        try{
+        try {
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
             UserEntity userEntity = usermapper.mapFrom(userDto);
+            userEntity.setRole(Role.USER);
+            System.out.println(userEntity);
             userRepository.save(userEntity);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch(Exception error){
+        } catch (Exception error) {
+            System.out.println(error);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
     @Override
     public SignInResponse signIn(SignInRequest signInRequest) {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInRequest.getEmail(), signInRequest.getPassword()));
-        }catch (BadCredentialsException e){
+        } catch (BadCredentialsException e) {
             throw new IllegalArgumentException("Invalid email or password");
         }
-        var user =userRepository.findByEmail(signInRequest.getEmail()).orElseThrow(()-> new IllegalArgumentException("User doest not exist"));
+        var user = userRepository.findByEmail(signInRequest.getEmail()).orElseThrow(() -> new IllegalArgumentException("User doest not exist"));
 
         var jwt = jwtService.generateToken(user);
 
-        return new SignInResponse(user,jwt);
+        return new SignInResponse(user, jwt);
     }
-}
+
+    @Override
+    public UserEntity findById(Long id) {
+
+        return userRepository.findById(id).get();
+    }
+
+    @Override
+    public String checkMail(String email) {
+        return userRepository.findByEmail(email).map(
+                existingUser -> {
+                    String foundEmail = Optional.ofNullable(existingUser.getEmail()).orElse(null);
+                    return foundEmail;
+                }).orElseThrow(
+                () -> new RuntimeException("Email Not Found")
+        );
+    }}
+
+

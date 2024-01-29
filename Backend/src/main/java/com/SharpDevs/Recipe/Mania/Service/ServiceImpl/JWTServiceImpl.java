@@ -8,6 +8,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -20,33 +21,36 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class JWTServiceImpl implements JWTService {
 
+//    @Value("${JWT_KEY}")
+    private String securityKey = "e9b8f0bde58bcd5a89cdc459eff0e894b2920f4fc7aefc8bdc7a5637280174c3";
+
     private <T> T extractClaim (String token, Function<Claims, T> claimsResolvers){
         final Claims claims  = extractAllClaims(token);
         return claimsResolvers.apply(claims);
     }
 
     private Claims extractAllClaims(String token){
-        return Jwts.parserBuilder().setSigningKey(getSigninKey()).build().parseClaimsJwt(token).getBody();
+        return Jwts.parserBuilder().setSigningKey(getSigninKey()).build().parseClaimsJws(token).getBody();
     }
 
 
 
     private Key getSigninKey(){
-        byte [] key = Decoders.BASE64.decode("eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwNjA4MzU0NSwiaWF0IjoxNzA2MDgzNTQ1fQ.AT1qwj6FYL4nOQZgqPqcVCfTLP0V4ojNFqTHmqcHb2I");
+        byte [] key = Decoders.BASE64.decode(securityKey);
         return Keys.hmacShaKeyFor(key);
     }
 
     @Override
     public String extractUserName(String token) {
-        return null;
+        return extractClaim(token,Claims ::getSubject);
     }
 
     @Override
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder().setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis())).
-                setExpiration(new Date(System.currentTimeMillis() +1000 * 60 * 60))
-                .signWith(getSigninKey())
+                setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .signWith(getSigninKey(),SignatureAlgorithm.HS256)
                 .compact();
     }
 

@@ -5,9 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-public class UserDto {
+@Data
+@AllArgsConstructor
+public class  UserDto {
 
     private String firstName;
 
