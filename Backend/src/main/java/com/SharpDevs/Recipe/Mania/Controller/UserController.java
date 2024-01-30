@@ -5,10 +5,7 @@ import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/user/")
@@ -16,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService ;
 
-    @PatchMapping(path = "/update-user")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, Long id){
+    @PatchMapping(path = "/update-user/{id}")
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable Long id){
         return userService.updateUser(userDto,id);
     }
 }
