@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
                         Optional.ofNullable(userEntity.getDescription()).ifPresent(existingUser::setDescription);
                         Optional.ofNullable(userEntity.getCountry()).ifPresent(existingUser::setCountry);
 
-                        UserDto savedUserDto = userMapper.mapTo(userRepository.save(existingUser));
+                        UserDto savedUserDto = userMapper.mapTo(userRepository.save(userEntity));
 
                         return new ResponseEntity<>(savedUserDto, HttpStatus.OK);
                     }
