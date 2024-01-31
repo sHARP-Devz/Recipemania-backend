@@ -3,11 +3,7 @@ package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.AuthenticationService;
 import com.SharpDevs.Recipe.Mania.Service.JWTService;
-import com.SharpDevs.Recipe.Mania.config.PasswordEncoderConfig;
-import com.SharpDevs.Recipe.Mania.domain.DTO.ChangePasswordRequest;
-import com.SharpDevs.Recipe.Mania.domain.DTO.SignInRequest;
-import com.SharpDevs.Recipe.Mania.domain.DTO.SignInResponse;
-import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
+import com.SharpDevs.Recipe.Mania.domain.DTO.*;
 import com.SharpDevs.Recipe.Mania.domain.Entity.Role;
 import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
@@ -26,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private  final Mapper<UserEntity, UserDto> usermapper;
+    private  final Mapper<UserEntity, SignUpDto> signUpMapper;
     private final UserRepository userRepository;
 
     private final AuthenticationManager authenticationManager;
@@ -35,11 +31,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final  JWTService jwtService;
 
+
     @Override
-    public ResponseEntity signUp(UserDto userDto) {
+    public ResponseEntity signUp(SignUpDto signUpDto) {
         try {
-            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            UserEntity userEntity = usermapper.mapFrom(userDto);
+            signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+            UserEntity userEntity = signUpMapper.mapFrom(signUpDto);
             userEntity.setRole(Role.USER);
             System.out.println(userEntity);
             userRepository.save(userEntity);
@@ -49,6 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
 
     @Override

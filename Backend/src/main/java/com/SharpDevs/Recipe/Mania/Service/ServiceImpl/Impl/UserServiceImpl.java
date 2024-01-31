@@ -3,7 +3,7 @@ package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.UserService;
 import com.SharpDevs.Recipe.Mania.domain.DTO.ChangePasswordRequest;
-import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
+import com.SharpDevs.Recipe.Mania.domain.DTO.UpdateUserDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final Mapper<UserEntity, UserDto> userMapper;
+    private final Mapper<UserEntity, UpdateUserDto> userMapper;
     private final PasswordEncoder passwordEncoder;
     @Override
     public UserDetailsService userDetailsService() {
@@ -35,19 +35,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserDto> updateUser(UserDto userDto, Long id) {
+    public ResponseEntity<UpdateUserDto> updateUser(UpdateUserDto updateUserDto, Long id) {
 
         if (userRepository.existsById(id)) {
-            UserEntity userEntity = userMapper.mapFrom(userDto);
-            userEntity.setUserId(id);
             return userRepository.findById(id).map(
                     existingUser -> {
-                        Optional.ofNullable(userEntity.getFirstName()).ifPresent(existingUser::setFirstName);
-                        Optional.ofNullable(userEntity.getLastName()).ifPresent(existingUser::setLastName);
-                        Optional.ofNullable(userEntity.getDescription()).ifPresent(existingUser::setDescription);
-                        Optional.ofNullable(userEntity.getCountry()).ifPresent(existingUser::setCountry);
 
-                        UserDto savedUserDto = userMapper.mapTo(userRepository.save(userEntity));
+                        Optional.ofNullable(updateUserDto.getFirstName()).ifPresent(existingUser::setFirstName);
+                        Optional.ofNullable(updateUserDto.getLastName()).ifPresent(existingUser::setLastName);
+                        Optional.ofNullable(updateUserDto.getDescription()).ifPresent(existingUser::setDescription);
+                        Optional.ofNullable(updateUserDto.getCountry()).ifPresent(existingUser::setCountry);
+
+                        System.out.println(existingUser);
+
+                        UpdateUserDto savedUserDto = userMapper.mapTo(userRepository.save(existingUser));
 
                         return new ResponseEntity<>(savedUserDto, HttpStatus.OK);
                     }
