@@ -2,10 +2,7 @@ package com.SharpDevs.Recipe.Mania.Controller;
 
 import com.SharpDevs.Recipe.Mania.Service.AuthenticationService;
 import com.SharpDevs.Recipe.Mania.Service.UserService;
-import com.SharpDevs.Recipe.Mania.domain.DTO.ChangePasswordRequest;
-import com.SharpDevs.Recipe.Mania.domain.DTO.SignInRequest;
-import com.SharpDevs.Recipe.Mania.domain.DTO.SignInResponse;
-import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
+import com.SharpDevs.Recipe.Mania.domain.DTO.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +18,8 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping(path="/register")
-    public ResponseEntity register(@RequestBody UserDto userDto){
-       ;return  authenticationService.signUp(userDto);
+    public ResponseEntity register(@RequestBody SignUpDto signUpDto){
+       ;return  authenticationService.signUp(signUpDto);
     }
     @PostMapping(path="/signin")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest){
