@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Component
 @RequiredArgsConstructor
 public class RecipeMapperImpl implements Mapper<RecipeEntity, RecipeDto> {
@@ -22,4 +25,16 @@ public class RecipeMapperImpl implements Mapper<RecipeEntity, RecipeDto> {
     public RecipeEntity mapFrom(RecipeDto recipeDto) {
         return modelMapper.map(recipeDto, RecipeEntity.class);
     }
+
+
+    public Iterable<RecipeDto> mapListTo(Iterable<RecipeEntity> recipeEntityIterable) {
+        return StreamSupport.stream(recipeEntityIterable.spliterator(),false)
+                .map(recipeEntity ->
+                    modelMapper.map(recipeEntity, RecipeDto.class)
+                ).collect(Collectors.toList());
+    }
+
+
+
+
 }

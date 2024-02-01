@@ -6,7 +6,8 @@ import lombok.Data;
 
 @Entity
 @Table(name = "recipe")
-@Data@Builder
+@Data
+@Builder
 public class RecipeEntity {
 
     @Column(name = "id")

@@ -3,7 +3,6 @@ package com.SharpDevs.Recipe.Mania.Service;
 import com.SharpDevs.Recipe.Mania.domain.DTO.SignInResponse;
 import com.SharpDevs.Recipe.Mania.domain.DTO.SignInRequest;
 import com.SharpDevs.Recipe.Mania.domain.DTO.SignUpDto;
-import com.SharpDevs.Recipe.Mania.domain.DTO.UpdateUserDto;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthenticationService {

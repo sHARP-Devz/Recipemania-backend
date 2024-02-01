@@ -1,10 +1,8 @@
 package com.SharpDevs.Recipe.Mania.domain.Mappers.Impl;
 
 import com.SharpDevs.Recipe.Mania.domain.DTO.SignUpDto;
-import com.SharpDevs.Recipe.Mania.domain.DTO.UpdateUserDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,4 +23,13 @@ public class SignUpMapperImpl implements Mapper<UserEntity, SignUpDto> {
     public UserEntity mapFrom(SignUpDto signUpDto) {
         return modelMapper.map(signUpDto,UserEntity.class);
     }
+
+    @Override
+    public Iterable<SignUpDto> mapListTo(Iterable<UserEntity> a) {
+        return null;
+    }
+
+
+
+
 }
