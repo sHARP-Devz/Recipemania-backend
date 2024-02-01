@@ -1,7 +1,8 @@
 package com.SharpDevs.Recipe.Mania.config;
 
-import com.SharpDevs.Recipe.Mania.domain.Entity.Role;
+
 import com.SharpDevs.Recipe.Mania.Service.UserService;
+import com.SharpDevs.Recipe.Mania.domain.Entity.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -34,6 +33,8 @@ public class SecurityConfiguration{
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**")
                         .permitAll()
                         .requestMatchers("/api/v1/user/**").hasAnyAuthority(Role.USER.name())
+                        .requestMatchers("/api/v1/newsletter/create").hasAnyAuthority(Role.USER.name())
+                        .requestMatchers("/api/v1/newsletter/retrieve").hasAnyAuthority(Role.ADMIN.name())
 //                        .requestMatchers("api/v1/user/**").hasAnyAuthority(Role.USER.name())
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

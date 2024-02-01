@@ -1,10 +1,9 @@
 package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
 
+import com.SharpDevs.Recipe.Mania.Exception.EmailNotFoundException;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.AuthenticationService;
 import com.SharpDevs.Recipe.Mania.Service.JWTService;
-import com.SharpDevs.Recipe.Mania.config.PasswordEncoderConfig;
-import com.SharpDevs.Recipe.Mania.domain.DTO.ChangePasswordRequest;
 import com.SharpDevs.Recipe.Mania.domain.DTO.SignInRequest;
 import com.SharpDevs.Recipe.Mania.domain.DTO.SignInResponse;
 import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
@@ -78,7 +77,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     String foundEmail = Optional.ofNullable(existingUser.getEmail()).orElse(null);
                     return foundEmail;
                 }).orElseThrow(
-                () -> new RuntimeException("Email Not Found")
+                () -> new EmailNotFoundException("Email Not Found")
         );
     }}
 

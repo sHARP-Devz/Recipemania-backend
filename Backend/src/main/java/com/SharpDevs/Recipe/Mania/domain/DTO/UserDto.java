@@ -1,14 +1,9 @@
 package com.SharpDevs.Recipe.Mania.domain.DTO;
 
+import com.SharpDevs.Recipe.Mania.domain.Entity.NewsletterEntity;
 import com.SharpDevs.Recipe.Mania.domain.Entity.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +13,7 @@ public class  UserDto {
 
     private String lastName;
 
-    private  String email;
+    private String email;
 
     private String password;
 
