@@ -11,6 +11,6 @@ public class NewsletterDto {
 
     @NotBlank(message = "Email cannot be blank")
     @Email
-    private String Email;
+    private String email;
 
 }

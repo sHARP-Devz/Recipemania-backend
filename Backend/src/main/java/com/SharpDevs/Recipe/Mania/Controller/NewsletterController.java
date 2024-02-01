@@ -33,7 +33,7 @@ public class NewsletterController {
     }
 
     @GetMapping("/retrieve")
-    public List<NewsletterEntity> findAllEmails(){
+    public List<NewsletterEntity> findAllEmail(){
         return newsletterService.findAllEmails();
     }
 

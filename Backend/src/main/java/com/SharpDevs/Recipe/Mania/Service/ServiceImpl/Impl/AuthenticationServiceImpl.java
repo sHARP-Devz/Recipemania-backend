@@ -1,6 +1,7 @@
 package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
 
 import com.SharpDevs.Recipe.Mania.Exception.EmailNotFoundException;
+import com.SharpDevs.Recipe.Mania.Exception.UserNotFoundException;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.AuthenticationService;
 import com.SharpDevs.Recipe.Mania.Service.JWTService;
@@ -25,7 +26,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private  final Mapper<UserEntity, UserDto> usermapper;
+    private  final Mapper<UserEntity, UserDto> userMapper;
     private final UserRepository userRepository;
 
     private final AuthenticationManager authenticationManager;
@@ -38,7 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public ResponseEntity signUp(UserDto userDto) {
         try {
             userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            UserEntity userEntity = usermapper.mapFrom(userDto);
+            UserEntity userEntity = userMapper.mapFrom(userDto);
             userEntity.setRole(Role.USER);
             System.out.println(userEntity);
             userRepository.save(userEntity);
@@ -55,9 +56,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInRequest.getEmail(), signInRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new IllegalArgumentException("Invalid email or password");
+            throw new EmailNotFoundException("Invalid email or password");
         }
-        var user = userRepository.findByEmail(signInRequest.getEmail()).orElseThrow(() -> new IllegalArgumentException("User doest not exist"));
+        var user = userRepository.findByEmail(signInRequest.getEmail()).orElseThrow(() -> new UserNotFoundException("User doesn't not exist"));
 
         var jwt = jwtService.generateToken(user);
 
@@ -77,7 +78,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     String foundEmail = Optional.ofNullable(existingUser.getEmail()).orElse(null);
                     return foundEmail;
                 }).orElseThrow(
-                () -> new EmailNotFoundException("Email Not Found")
+                () -> new EmailNotFoundException("Email Not Found!!!")
         );
     }}
 

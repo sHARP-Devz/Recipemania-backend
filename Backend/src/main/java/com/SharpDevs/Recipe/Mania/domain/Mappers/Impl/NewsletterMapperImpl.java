@@ -4,6 +4,7 @@ import com.SharpDevs.Recipe.Mania.domain.DTO.NewsletterDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.NewsletterEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,8 +13,8 @@ public class NewsletterMapperImpl implements Mapper<NewsletterEntity, Newsletter
 
     private final ModelMapper modelMapper ;
     @Override
-    public NewsletterDto mapTo(NewsletterEntity newsletterEntity) {
-        return modelMapper.map(newsletterEntity, NewsletterDto.class);
+    public NewsletterDto mapTo(NewsletterEntity newsletter) {
+        return modelMapper.map(newsletter, NewsletterDto.class);
     }
 
     @Override
