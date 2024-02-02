@@ -35,6 +35,7 @@ public class SecurityConfiguration{
                         .requestMatchers("/api/v1/user/**").hasAnyAuthority(Role.USER.name())
                         .requestMatchers("/api/v1/newsletter/create").hasAnyAuthority(Role.USER.name())
                         .requestMatchers("/api/v1/newsletter/retrieve").hasAnyAuthority(Role.ADMIN.name())
+                        .requestMatchers("/api/v1/newsletter/deleteEmail").hasAnyAuthority(Role.ADMIN.name())
 //                        .requestMatchers("api/v1/user/**").hasAnyAuthority(Role.USER.name())
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
