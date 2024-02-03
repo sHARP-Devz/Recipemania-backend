@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService  {
@@ -45,19 +47,45 @@ public class RecipeServiceImpl implements RecipeService  {
 
     }
 
-    @Override
-    public ResponseEntity<RecipeDto> getRecipe(String id) {
-        return null;
+    public ResponseEntity<RecipeDto> getRecipe(Long id) {
+
+            Optional<RecipeEntity> existingRecipe = recipeRepository.findById(id);
+        return existingRecipe.map(recipeEntity -> {
+            RecipeDto recipeDto = recipeDtoMapper.mapTo(recipeEntity);
+
+            return new ResponseEntity<>(recipeDto,HttpStatus.FOUND);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+        @Override
+    public ResponseEntity<RecipeDto> updateRecipe(Long id, RecipeDto recipeDto) {
+        if(recipeRepository.existsById(id)){
+            return recipeRepository.findById(id).map(
+                    existingRecipe -> {
+                        Optional.ofNullable(recipeDto.getTitle()).ifPresent(existingRecipe::setTitle);
+                        Optional.ofNullable(recipeDto.getDescriptions()).ifPresent(existingRecipe::setDescriptions);
+                        Optional.ofNullable(recipeDto.getCookingTime()).ifPresent(existingRecipe::setCookingTime);
+                        Optional.ofNullable(recipeDto.getDifficult()).ifPresent(existingRecipe::setDifficult);
+                        Optional.ofNullable(recipeDto.getDirection()).ifPresent(existingRecipe::setDirection);
+                        Optional.ofNullable(recipeDto.getServes()).ifPresent(existingRecipe::setServes);
+                        Optional.ofNullable(recipeDto.getMetaDescription()).ifPresent(existingRecipe::setMetaDescription);
+                        Optional.ofNullable(recipeDto.getPermLink()).ifPresent(existingRecipe::setPermLink);
+                        Optional.ofNullable(recipeDto.getVideoLink()).ifPresent(existingRecipe::setVideoLink);
+                        Optional.ofNullable(recipeDto.getPrepareTime()).ifPresent(existingRecipe::setPrepareTime);
+
+                        RecipeDto updatedRecipe = recipeDtoMapper.mapTo(recipeRepository.save(existingRecipe));
+
+                        return new ResponseEntity<>(updatedRecipe,HttpStatus.OK);
+                    }
+            ).orElseThrow(() -> new RuntimeException("Recipe Did Not Update"));
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @Override
-    public ResponseEntity<RecipeDto> updateRecipe(String id, RecipeDto recipeDto) {
-        return null;
-    }
-
-    @Override
-    @Transactional
-    public ResponseEntity<RecipeDto> deleteRecipe(Long id) {
+    public ResponseEntity<HttpStatus> deleteRecipe(Long id) {
         try {
             recipeRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

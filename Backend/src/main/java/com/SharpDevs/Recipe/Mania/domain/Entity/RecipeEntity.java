@@ -3,13 +3,15 @@ package com.SharpDevs.Recipe.Mania.domain.Entity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "recipe")
 @Data
-@Builder
+@NoArgsConstructor
 public class RecipeEntity {
 
+    @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
