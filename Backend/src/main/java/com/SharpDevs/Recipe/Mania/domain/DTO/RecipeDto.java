@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecipeDto {
 
+    private String  id;
     private String title;
 
     private String permLink;

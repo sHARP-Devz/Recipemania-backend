@@ -60,6 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         var jwt = jwtService.generateToken(user);
 
+        UserDto signedInUser = signInMapper.mapTo(user);
         return new SignInResponse(user, jwt);
     }
 

@@ -32,7 +32,7 @@
 //            ResponseEntity.badRequest().body("Input a Valid email or Email exists");
 //        }
 //        return newsletterService.saveEmail(newsletterDto);
-//    }
+//    }dfg
 //
 //    @GetMapping("/retrieve")
 //    public Optional<NewsletterEntity> findAllEmails(String email){
