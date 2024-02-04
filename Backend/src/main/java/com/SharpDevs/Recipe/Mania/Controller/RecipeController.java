@@ -29,7 +29,7 @@ public class RecipeController {
         return recipeService.getRecipe(id);
     }
 
-    @PutMapping(path = "/id")
+    @PutMapping(path = "/user/id")
     public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long id, @RequestBody RecipeDto recipeDto){
         return recipeService.updateRecipe(id,recipeDto);
     }
