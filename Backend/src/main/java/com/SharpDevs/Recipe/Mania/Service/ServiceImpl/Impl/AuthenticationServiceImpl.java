@@ -31,7 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final  JWTService jwtService;
 
-
+    private final Mapper<UserEntity,UserDto> userMapper;
     @Override
     public ResponseEntity signUp(SignUpDto signUpDto) {
         try {
@@ -60,8 +60,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         var jwt = jwtService.generateToken(user);
 
-        UserDto signedInUser = signInMapper.mapTo(user);
-        return new SignInResponse(user, jwt);
+        UserDto signedInUser = userMapper.mapTo(user);
+        return new SignInResponse(signedInUser, jwt);
     }
 
     @Override
