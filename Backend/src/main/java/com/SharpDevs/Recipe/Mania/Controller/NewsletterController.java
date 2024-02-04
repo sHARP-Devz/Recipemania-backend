@@ -4,6 +4,7 @@ import com.SharpDevs.Recipe.Mania.Exception.EmailNotFoundException;
 import com.SharpDevs.Recipe.Mania.Repository.NewsletterRepository;
 import com.SharpDevs.Recipe.Mania.Service.NewsletterService;
 import com.SharpDevs.Recipe.Mania.domain.DTO.NewsletterDto;
+import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.NewsletterEntity;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,12 +34,13 @@ public class NewsletterController {
         return newsletterService.saveEmail(newsletterDto);
     }
 
+
     @GetMapping("/retrieve")
-    public List<NewsletterEntity> findAllEmail(){
-        return newsletterService.findAllEmails();
+    public ResponseEntity<Iterable<NewsletterDto>> getAllNewsletterEmails(){
+        return newsletterService.getAllNewsletter();
     }
 
-    @DeleteMapping("/deleteEmail")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteEmail(@PathVariable Long id) throws EmailNotFoundException {
         System.out.println("---------------");
         NewsletterEntity newsletter = newsletterRepository.findById(id)

@@ -28,8 +28,14 @@ public class NewsletterServiceImpl implements NewsletterService {
         newsletter.setEmail(newsletterDto.getEmail());
         return ResponseEntity.ok(newsletterRepository.save(newsletter));
     }
-    public List<NewsletterEntity> findAllEmails(){
-        return newsletterRepository.findAll();
-    }
 
+    @Override
+    public ResponseEntity<Iterable<NewsletterDto>> getAllNewsletter() {
+        try{
+            Iterable<NewsletterEntity> allNewsletterEmailsList = newsletterRepository.findAll();
+            return new ResponseEntity<>(newsletterMapper.mapListTo(allNewsletterEmailsList),HttpStatus.OK);
+        }catch (Exception err) {
+            throw new RuntimeException("Failed to fetch Newsletter emails");
+        }
+    }
 }

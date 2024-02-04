@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "db_newsletter")
+@Table(name = "newsletter")
 public class NewsletterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
