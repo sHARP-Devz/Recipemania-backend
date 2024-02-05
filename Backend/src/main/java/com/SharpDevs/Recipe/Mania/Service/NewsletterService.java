@@ -9,5 +9,9 @@ import java.util.List;
 public interface NewsletterService {
     ResponseEntity<NewsletterEntity> saveEmail(NewsletterDto newsletterDto);
 
+<<<<<<< HEAD
+    ResponseEntity<Iterable<NewsletterDto>> getAllNewsletter();
+=======
    List<NewsletterEntity> findAllEmails();
+>>>>>>> recipe-Dami
 }
