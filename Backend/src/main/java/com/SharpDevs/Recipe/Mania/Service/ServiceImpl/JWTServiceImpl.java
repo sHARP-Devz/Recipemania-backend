@@ -21,8 +21,8 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class JWTServiceImpl implements JWTService {
 
-//    @Value("${JWT_KEY}")
-    private String securityKey = "e9b8f0bde58bcd5a89cdc459eff0e894b2920f4fc7aefc8bdc7a5637280174c3";
+    @Value("${JWT_KEY}")
+    private String securityKey;
 
     private <T> T extractClaim (String token, Function<Claims, T> claimsResolvers){
         final Claims claims  = extractAllClaims(token);
@@ -49,7 +49,7 @@ public class JWTServiceImpl implements JWTService {
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder().setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis())).
-                setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 120))
                 .signWith(getSigninKey(),SignatureAlgorithm.HS256)
                 .compact();
     }

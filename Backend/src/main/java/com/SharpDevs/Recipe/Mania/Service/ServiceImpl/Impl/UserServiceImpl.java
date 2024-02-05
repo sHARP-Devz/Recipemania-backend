@@ -38,16 +38,17 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<UserDto> updateUser(UserDto userDto, Long id) {
 
         if (userRepository.existsById(id)) {
-            UserEntity userEntity = userMapper.mapFrom(userDto);
-            userEntity.setUserId(id);
             return userRepository.findById(id).map(
                     existingUser -> {
-                        Optional.ofNullable(userEntity.getFirstName()).ifPresent(existingUser::setFirstName);
-                        Optional.ofNullable(userEntity.getLastName()).ifPresent(existingUser::setLastName);
-                        Optional.ofNullable(userEntity.getDescription()).ifPresent(existingUser::setDescription);
-                        Optional.ofNullable(userEntity.getCountry()).ifPresent(existingUser::setCountry);
 
-                        UserDto savedUserDto = userMapper.mapTo(userRepository.save(userEntity));
+                        Optional.ofNullable(userDto.getFirstName()).ifPresent(existingUser::setFirstName);
+                        Optional.ofNullable(userDto.getLastName()).ifPresent(existingUser::setLastName);
+                        Optional.ofNullable(userDto.getDescription()).ifPresent(existingUser::setDescription);
+                        Optional.ofNullable(userDto.getCountry()).ifPresent(existingUser::setCountry);
+
+                        System.out.println(existingUser);
+
+                        UserDto savedUserDto = userMapper.mapTo(userRepository.save(existingUser));
 
                         return new ResponseEntity<>(savedUserDto, HttpStatus.OK);
                     }
