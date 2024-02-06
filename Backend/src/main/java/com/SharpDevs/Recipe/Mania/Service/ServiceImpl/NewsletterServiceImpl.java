@@ -3,13 +3,7 @@ package com.SharpDevs.Recipe.Mania.Service.ServiceImpl;
 import com.SharpDevs.Recipe.Mania.Repository.NewsletterRepository;
 import com.SharpDevs.Recipe.Mania.Service.NewsletterService;
 import com.SharpDevs.Recipe.Mania.domain.DTO.NewsletterDto;
-<<<<<<< HEAD
 import com.SharpDevs.Recipe.Mania.domain.Entity.NewsletterEntity;
-=======
-import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
-import com.SharpDevs.Recipe.Mania.domain.Entity.NewsletterEntity;
-import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
->>>>>>> recipe-Dami
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,7 +28,6 @@ public class NewsletterServiceImpl implements NewsletterService {
         newsletter.setEmail(newsletterDto.getEmail());
         return ResponseEntity.ok(newsletterRepository.save(newsletter));
     }
-<<<<<<< HEAD
 
     @Override
     public ResponseEntity<Iterable<NewsletterDto>> getAllNewsletter() {
@@ -45,10 +38,8 @@ public class NewsletterServiceImpl implements NewsletterService {
             throw new RuntimeException("Failed to fetch Newsletter emails");
         }
     }
-=======
     public List<NewsletterEntity> findAllEmails(){
         return newsletterRepository.findAll();
     }
 
->>>>>>> recipe-Dami
 }

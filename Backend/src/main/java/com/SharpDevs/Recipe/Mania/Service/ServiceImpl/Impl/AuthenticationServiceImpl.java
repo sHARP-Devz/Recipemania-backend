@@ -24,7 +24,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private  final Mapper<UserEntity, UserDto> usermapper;
     private final UserRepository userRepository;
 
     private final AuthenticationManager authenticationManager;
@@ -36,7 +35,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final  JWTService jwtService;
 
     private final Mapper<UserEntity,UserDto> userMapper;
-    @Override
+
+    @Override 
     public ResponseEntity signUp(SignUpDto signUpDto) {
         try {
             signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));

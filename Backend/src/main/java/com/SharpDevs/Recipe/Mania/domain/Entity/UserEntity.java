@@ -2,6 +2,8 @@ package com.SharpDevs.Recipe.Mania.domain.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -30,7 +32,8 @@ public class UserEntity implements UserDetails {
     private String lastName;
 
     @Column(name = "email" , unique = true)
-    @NonNull
+    @NotNull(message = "email can't be null")
+    @NotBlank(message = " email cannot be blank")
     private  String email;
 
     @Column(name = "password")
@@ -47,9 +50,6 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "email", nullable = false)
-    private NewsletterEntity newsletterEntity;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
