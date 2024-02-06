@@ -13,11 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-<<<<<<< HEAD
 @Table(name = "newsletter")
-=======
-@Table(name = "db_newsletter")
->>>>>>> recipe-Dami
 public class NewsletterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +24,6 @@ public class NewsletterEntity {
     @Email
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "UserEntity")
-    private UserEntity userEntity;
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "UserEntity")
+//    private UserEntity userEntity;
 }

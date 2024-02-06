@@ -13,6 +13,7 @@ import java.util.stream.StreamSupport;
 @Component
 @RequiredArgsConstructor
 public class UserMapperImpl implements Mapper<UserEntity, UserDto> {
+
     private final ModelMapper modelMapper;
 
     @Override

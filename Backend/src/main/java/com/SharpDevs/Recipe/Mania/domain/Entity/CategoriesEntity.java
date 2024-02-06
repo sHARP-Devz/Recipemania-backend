@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
-@Table(name = "newsletter")
+@Table(name = "categories")
 public class CategoriesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +30,6 @@ public class CategoriesEntity {
     @NotBlank(message = "permLink cannot be blank")
     private String permLink;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "RecipeEntity")
-    private RecipeEntity recipeEntity;
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "RecipeEntity")
+//    private RecipeEntity recipeEntity;
 }

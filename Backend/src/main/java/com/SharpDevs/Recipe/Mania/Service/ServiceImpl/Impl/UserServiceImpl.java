@@ -19,9 +19,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+
     private final Mapper<UserEntity, UserDto> userMapper;
+
     private final PasswordEncoder passwordEncoder;
     @Override
     public UserDetailsService userDetailsService() {

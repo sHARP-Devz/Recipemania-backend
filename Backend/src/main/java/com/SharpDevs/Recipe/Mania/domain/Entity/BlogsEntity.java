@@ -25,7 +25,7 @@ public class BlogsEntity {
     @NotBlank(message = "created cannot be blank")
     private Date created;
 
-    @Column(name = "permLink")
+    @Column(name = "updated")
     @NotBlank(message = "updated cannot be blank")
     private Date updated;
 
