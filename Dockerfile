@@ -13,10 +13,10 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 
 # Copy only the generated JAR from the builder stage
-COPY --from=builder target/*.jar app.jar
+COPY --from=builder /app/target/Recipe-Mania-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the port needed for your application
-EXPOSE 8080
+EXPOSE 9080
 
 # Execute the JAR within the final image
 CMD ["java", "-jar", "app.jar"]
