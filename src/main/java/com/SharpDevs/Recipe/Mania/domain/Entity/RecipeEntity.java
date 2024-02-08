@@ -49,7 +49,9 @@ public class RecipeEntity {
     @Column (name = "featured_image")
     private String featured_image;
 
-//    @JoinColumn(name = "user", referencedColumnName =  "user_id")
-//    @ManyToOne(optional = false)
-//    private UserEntity user;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user", referencedColumnName =  "user_id")
+    private UserEntity user;
+
 }

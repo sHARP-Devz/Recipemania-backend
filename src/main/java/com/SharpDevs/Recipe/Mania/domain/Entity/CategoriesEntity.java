@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +32,7 @@ public class CategoriesEntity {
     @NotBlank(message = "permLink cannot be blank")
     private String permLink;
 
-//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "RecipeEntity")
-//    private RecipeEntity recipeEntity;
+    @OneToMany( mappedBy = "RecipeEntity")
+    @JoinColumn(name ="recipe",referencedColumnName = "id")
+    private List<RecipeEntity> recipeEntity;
 }
