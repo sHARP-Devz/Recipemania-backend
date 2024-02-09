@@ -11,5 +11,5 @@ public interface NewsletterService {
 
 
     ResponseEntity<Iterable<NewsletterDto>> getAllNewsletter();
-   List<NewsletterEntity> findAllEmails();
+
 }
