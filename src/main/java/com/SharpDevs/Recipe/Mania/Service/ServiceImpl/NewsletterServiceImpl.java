@@ -38,8 +38,5 @@ public class NewsletterServiceImpl implements NewsletterService {
             throw new RuntimeException("Failed to fetch Newsletter emails");
         }
     }
-    public List<NewsletterEntity> findAllEmails(){
-        return newsletterRepository.findAll();
-    }
 
 }
