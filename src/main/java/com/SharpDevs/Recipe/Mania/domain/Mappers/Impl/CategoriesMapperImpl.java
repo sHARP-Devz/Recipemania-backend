@@ -1,9 +1,7 @@
 package com.SharpDevs.Recipe.Mania.domain.Mappers.Impl;
 
-import com.SharpDevs.Recipe.Mania.domain.DTO.CategoriesDto;
-import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
-import com.SharpDevs.Recipe.Mania.domain.Entity.CategoriesEntity;
-import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
+import com.SharpDevs.Recipe.Mania.domain.DTO.CategoryDto;
+import com.SharpDevs.Recipe.Mania.domain.Entity.CategoryEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -11,21 +9,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CategoriesMapperImpl implements Mapper<CategoriesEntity, CategoriesDto> {
+public class CategoriesMapperImpl implements Mapper<CategoryEntity, CategoryDto> {
 
     private final ModelMapper modelMapper;
     @Override
-    public CategoriesDto mapTo(CategoriesEntity categoriesEntity) {
-        return modelMapper.map(categoriesEntity, CategoriesDto.class);
+    public CategoryDto mapTo(CategoryEntity categoriesEntity) {
+        return modelMapper.map(categoriesEntity, CategoryDto.class);
     }
 
     @Override
-    public CategoriesEntity mapFrom(CategoriesDto categoriesDto) {
-        return modelMapper.map(categoriesDto, CategoriesEntity.class);
+    public CategoryEntity mapFrom(CategoryDto categoriesDto) {
+        return modelMapper.map(categoriesDto, CategoryEntity.class);
     }
 
     @Override
-    public Iterable<CategoriesDto> mapListTo(Iterable<CategoriesEntity> a) {
+    public Iterable<CategoryDto> mapListTo(Iterable<CategoryEntity> a) {
         return null;
     }
 }

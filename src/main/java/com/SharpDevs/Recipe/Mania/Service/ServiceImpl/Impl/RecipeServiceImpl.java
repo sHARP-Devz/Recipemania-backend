@@ -1,11 +1,13 @@
 package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
 
 import com.SharpDevs.Recipe.Mania.Repository.RecipeRepository;
+import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.RecipeService;
+import com.SharpDevs.Recipe.Mania.Utils;
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
+import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,20 +21,29 @@ public class RecipeServiceImpl implements RecipeService  {
 
    private final Mapper<RecipeEntity,RecipeDto> recipeDtoMapper;
 
+   private final UserRepository userRepository;
+
    private  final RecipeRepository recipeRepository;
     @Override
-    public ResponseEntity<RecipeDto> addRecipe(RecipeDto recipeDto)  {
+    public ResponseEntity<RecipeDto> addRecipe(Long userId, RecipeDto recipeDto)  {
         try {
-            RecipeEntity recipeEntity = recipeDtoMapper.mapFrom(recipeDto);
-            if (recipeEntity != null) {
-              RecipeEntity  savedRecipeEntity = recipeRepository.save(recipeEntity);
-              recipeDto =  recipeDtoMapper.mapTo(savedRecipeEntity);
-                return new ResponseEntity<>(recipeDto,HttpStatus.OK);
+            if(userRepository.existsByUserId(userId)){
+                UserEntity existingUser = Utils.getUser(userId, userRepository);
+                RecipeEntity recipeEntity = recipeDtoMapper.mapFrom(recipeDto);
+                if (recipeEntity != null) {
+                    recipeEntity.setUser(existingUser);
+                    RecipeEntity  savedRecipeEntity = recipeRepository.save(recipeEntity);
+                    recipeDto =  recipeDtoMapper.mapTo(savedRecipeEntity);
+                    return new ResponseEntity<>(recipeDto,HttpStatus.OK);
+                }else{
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             }else{
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                throw new RuntimeException("User does not exist");
             }
+
         }catch(Exception e){
-            throw new RuntimeException("Encountered an error while saving recipe");
+            throw new RuntimeException(e + "Encountered an error while saving recipe");
         }
     }
 
@@ -47,9 +58,9 @@ public class RecipeServiceImpl implements RecipeService  {
 
     }
 
-    public ResponseEntity<RecipeDto> getRecipe(Long id) {
+    public ResponseEntity<RecipeDto> getRecipe(Long user_id) {
 
-            Optional<RecipeEntity> existingRecipe = recipeRepository.findById(id);
+            Optional<RecipeEntity> existingRecipe = recipeRepository.findById(user_id);
         return existingRecipe.map(recipeEntity -> {
             RecipeDto recipeDto = recipeDtoMapper.mapTo(recipeEntity);
 
@@ -58,9 +69,9 @@ public class RecipeServiceImpl implements RecipeService  {
     }
 
         @Override
-    public ResponseEntity<RecipeDto> updateRecipe(Long id, RecipeDto recipeDto) {
-        if(recipeRepository.existsById(id)){
-            return recipeRepository.findById(id).map(
+    public ResponseEntity<RecipeDto> updateRecipe(Long user_id, RecipeDto recipeDto) {
+        if(recipeRepository.existsById(user_id)){
+            return recipeRepository.findById(user_id).map(
                     existingRecipe -> {
                         Optional.ofNullable(recipeDto.getTitle()).ifPresent(existingRecipe::setTitle);
                         Optional.ofNullable(recipeDto.getDescriptions()).ifPresent(existingRecipe::setDescriptions);
@@ -85,13 +96,15 @@ public class RecipeServiceImpl implements RecipeService  {
     }
 
     @Override
-    public ResponseEntity<HttpStatus> deleteRecipe(Long id) {
+    public ResponseEntity<HttpStatus> deleteRecipe(Long user_id) {
         try {
-            recipeRepository.deleteById(id);
+            recipeRepository.deleteById(user_id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch(Exception err){
             throw new RuntimeException("Delete failed");
         }
 
     }
+
+
 }

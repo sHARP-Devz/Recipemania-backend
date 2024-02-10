@@ -4,16 +4,17 @@ package com.SharpDevs.Recipe.Mania.domain.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categories")
-public class CategoriesEntity {
+@Table(name = "category")
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +31,10 @@ public class CategoriesEntity {
     @NotBlank(message = "permLink cannot be blank")
     private String permLink;
 
-//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "RecipeEntity")
-//    private RecipeEntity recipeEntity;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    @OneToMany(mappedBy = "category")
+    private Set<RecipeEntity> recipes;
 }

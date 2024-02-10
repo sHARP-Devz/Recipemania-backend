@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -49,6 +50,12 @@ public class UserEntity implements UserDetails {
     @Column (name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private Set<CategoryEntity> categories;
+
+    @OneToMany(mappedBy = "user")
+    private Set<RecipeEntity> recipes;
 
 
     @Override
