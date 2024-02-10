@@ -1,7 +1,6 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -50,8 +49,13 @@ public class RecipeEntity {
     private String featured_image;
 
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user", referencedColumnName =  "user_id")
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 
 }

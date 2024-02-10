@@ -1,13 +1,12 @@
 package com.SharpDevs.Recipe.Mania.Service;
 
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
-import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public interface RecipeService {
-    public ResponseEntity<RecipeDto> addRecipe(RecipeDto recipeDto);
+    public ResponseEntity<RecipeDto> addRecipe(Long id, RecipeDto recipeDto);
 
     public ResponseEntity<Iterable<RecipeDto>> getAllRecipe();
 

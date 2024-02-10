@@ -51,9 +51,12 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
-    @JoinColumn(name = "recipe" ,referencedColumnName = "id")
-    private Set<RecipeEntity> recipe;
+    @OneToMany(mappedBy = "user")
+    private Set<CategoryEntity> categories;
+
+    @OneToMany(mappedBy = "user")
+    private Set<RecipeEntity> recipes;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
