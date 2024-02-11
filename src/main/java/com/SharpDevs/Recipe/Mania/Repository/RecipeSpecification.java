@@ -1,5 +1,6 @@
 package com.SharpDevs.Recipe.Mania.Repository;
 
+import com.SharpDevs.Recipe.Mania.domain.DTO.CategoriesDto;
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
 import jakarta.persistence.criteria.Predicate;
@@ -24,6 +25,7 @@ public class RecipeSpecification {
                 return criteriaBuilder.or(titlePredicate);
             });
         }
+
         public static String likePattern(String value){
             return "%" + value + "%";
         }
