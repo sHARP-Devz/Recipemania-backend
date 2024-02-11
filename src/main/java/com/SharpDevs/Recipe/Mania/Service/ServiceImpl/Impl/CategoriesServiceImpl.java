@@ -26,15 +26,16 @@ public class CategoriesServiceImpl implements CategoryService {
         try {
             UserEntity foundUser = Utils.getUser(userId,userRepository);
             if(foundUser!=null){
+                categoryDto.setUser(foundUser);
             CategoryEntity newCategory = categoryMapper.mapFrom(categoryDto);
-            newCategory.setUser(foundUser);
-            categoryDto = categoryMapper.mapTo(categoryRepository.save(newCategory));
+
+                categoryDto = categoryMapper.mapTo(categoryRepository.save(newCategory));
             return new ResponseEntity(categoryDto, HttpStatus.CREATED);
             }else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        }catch(Error err){
-            throw new RuntimeException("Error while creating Category");
+        }catch(Exception err){
+            throw new RuntimeException(err + "Error while creating Category");
         }
     }
 }
