@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.FieldError;
 
 import java.util.Set;
 
@@ -31,7 +32,7 @@ public class CategoryEntity {
     @NotBlank(message = "permLink cannot be blank")
     private String permLink;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 

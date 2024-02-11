@@ -51,10 +51,10 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<CategoryEntity> categories;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch =FetchType.EAGER)
     private Set<RecipeEntity> recipes;
 
 
