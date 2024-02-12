@@ -1,10 +1,12 @@
 package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
 
+import com.SharpDevs.Recipe.Mania.Repository.CategoryRepository;
 import com.SharpDevs.Recipe.Mania.Repository.RecipeRepository;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.RecipeService;
 import com.SharpDevs.Recipe.Mania.Utils;
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
+import com.SharpDevs.Recipe.Mania.domain.Entity.CategoryEntity;
 import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
 import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
@@ -23,6 +25,8 @@ public class RecipeServiceImpl implements RecipeService  {
 
    private final UserRepository userRepository;
 
+   private final CategoryRepository categoryRepository;
+
    private  final RecipeRepository recipeRepository;
     @Override
     public ResponseEntity<RecipeDto> addRecipe(Long userId, RecipeDto recipeDto)  {
@@ -31,7 +35,11 @@ public class RecipeServiceImpl implements RecipeService  {
                 UserEntity existingUser = Utils.getUser(userId, userRepository);
                 RecipeEntity recipeEntity = recipeDtoMapper.mapFrom(recipeDto);
                 if (recipeEntity != null) {
-                    recipeEntity.setUser(existingUser);
+                   CategoryEntity foundCategory =  categoryRepository.findById(recipeDto.getCategoryId()).orElse(null);
+                    if(foundCategory!=null){
+                        recipeEntity.setCategory(foundCategory);
+                    }
+                   recipeEntity.setUser(existingUser);
                     RecipeEntity  savedRecipeEntity = recipeRepository.save(recipeEntity);
                     recipeDto =  recipeDtoMapper.mapTo(savedRecipeEntity);
                     return new ResponseEntity<>(recipeDto,HttpStatus.OK);
@@ -105,6 +113,5 @@ public class RecipeServiceImpl implements RecipeService  {
         }
 
     }
-
 
 }

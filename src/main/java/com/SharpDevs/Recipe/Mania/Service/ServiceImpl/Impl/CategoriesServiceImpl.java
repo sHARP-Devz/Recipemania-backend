@@ -20,7 +20,7 @@ public class CategoriesServiceImpl implements CategoryService {
     
     private final UserRepository userRepository;
 
-    private Mapper<CategoryEntity,CategoryDto> categoryMapper;
+    private final Mapper<CategoryEntity,CategoryDto> categoryMapper;
     @Override
     public ResponseEntity<HttpStatus> createCategory(Long userId, CategoryDto categoryDto) throws RuntimeException{
         try {

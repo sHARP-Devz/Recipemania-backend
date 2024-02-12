@@ -48,8 +48,6 @@ public class RecipeEntity {
     @Column (name = "featured_image")
     private String featured_image;
 
-
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
