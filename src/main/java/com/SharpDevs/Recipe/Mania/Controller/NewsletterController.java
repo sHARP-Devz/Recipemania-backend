@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/newsletter")
+@RequestMapping("/api/v1")
 @CrossOrigin(origins = "*")
 public class NewsletterController {
 
@@ -26,7 +26,7 @@ public class NewsletterController {
 
     private final NewsletterRepository newsletterRepository;
 
-    @PostMapping("/create")
+    @PostMapping("newsletter/user/create")
     public ResponseEntity<NewsletterEntity> saveEmail(@Valid @RequestBody NewsletterDto newsletterDto, BindingResult result) {
         if (result.hasErrors()) {
             ResponseEntity.badRequest().body("Input a Valid email or Email exists");
@@ -34,13 +34,16 @@ public class NewsletterController {
         return newsletterService.saveEmail(newsletterDto);
     }
 
-    @GetMapping("/retrieve")
+    @GetMapping("newsletter/admin/retrieve")
     public ResponseEntity<Iterable<NewsletterDto>> getAllNewsletterEmails() {
         return newsletterService.getAllNewsletter();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteEmail(@PathVariable Long id) throws EmailNotFoundException {
+    public ResponseEntity<HttpStatus> deleteEmail(@PathVariable Long id,@Valid @RequestBody NewsletterDto newsletterDto) throws EmailNotFoundException {
+        if (newsletterRepository.existsByEmail(newsletterDto.getEmail())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         System.out.println("---------------");
         NewsletterEntity newsletter = newsletterRepository.findById(id)
                 .orElseThrow(() -> new EmailNotFoundException("Email not Found"));
