@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.FieldError;
 
 import java.util.Set;
 
@@ -24,7 +23,7 @@ public class CategoryEntity {
     @NotBlank(message = "Icons cannot be blank")
     private String icons;
 
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     @NotBlank(message = "Title cannot be blank")
     private String title;
 

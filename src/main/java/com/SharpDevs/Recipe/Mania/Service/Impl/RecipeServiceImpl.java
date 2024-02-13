@@ -1,4 +1,4 @@
-package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
+package com.SharpDevs.Recipe.Mania.Service.Impl;
 
 import com.SharpDevs.Recipe.Mania.Repository.CategoryRepository;
 import com.SharpDevs.Recipe.Mania.Repository.RecipeRepository;

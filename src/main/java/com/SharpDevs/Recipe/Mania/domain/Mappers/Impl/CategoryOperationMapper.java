@@ -1,38 +1,37 @@
 package com.SharpDevs.Recipe.Mania.domain.Mappers.Impl;
 
-import com.SharpDevs.Recipe.Mania.domain.DTO.CategoryDto;
-import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
+import com.SharpDevs.Recipe.Mania.domain.DTO.CategoryOperationsDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.CategoryEntity;
-import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
 @RequiredArgsConstructor
-public class CategoryMapperImpl implements Mapper<CategoryEntity, CategoryDto> {
+public class CategoryOperationMapper implements Mapper<CategoryEntity, CategoryOperationsDto> {
 
     private final ModelMapper modelMapper;
 
     @Override
-    public CategoryDto mapTo(CategoryEntity categoryEntity) {
-        return modelMapper.map(categoryEntity, CategoryDto.class);
+    public CategoryOperationsDto mapTo(CategoryEntity categoryEntity) {
+        return modelMapper.map(categoryEntity, CategoryOperationsDto.class);
     }
 
     @Override
-    public CategoryEntity mapFrom(CategoryDto categoryDto) {
-        return modelMapper.map(categoryDto,CategoryEntity.class);
+    public CategoryEntity mapFrom(CategoryOperationsDto categoryOperationsDto) {
+        return modelMapper.map(categoryOperationsDto, CategoryEntity.class);
     }
 
     @Override
-    public Iterable<CategoryDto> mapListTo(Iterable<CategoryEntity> categoryEntities) {
+    public List<CategoryOperationsDto> mapListTo(Iterable<CategoryEntity> categoryEntities) {
         return StreamSupport.stream(categoryEntities.spliterator(), false)
                 .map(categoryEntity -> modelMapper.map(
-                        categoryEntity, CategoryDto.class
+                        categoryEntity, CategoryOperationsDto.class
                 )).collect(Collectors.toList());
     }
 

@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 
 public class Utils {
 
-    public static UserEntity getUser (Long userId, UserRepository userRepository){
-
-        return userRepository.findById(userId).orElse(null);
+    public static UserEntity getUser (Long userId, UserRepository userRepository) {
+        try {
+            UserEntity user = userRepository.findById(userId).orElse(null);
+            return user;
+        } catch (Exception E) {
+            throw new RuntimeException(E);
+        }
     }
 }

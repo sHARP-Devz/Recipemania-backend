@@ -1,11 +1,9 @@
-package com.SharpDevs.Recipe.Mania.Service.ServiceImpl.Impl;
+package com.SharpDevs.Recipe.Mania.Service.Impl;
 
 import com.SharpDevs.Recipe.Mania.Repository.RecipeRepository;
 import com.SharpDevs.Recipe.Mania.Repository.RecipeSpecification;
 import com.SharpDevs.Recipe.Mania.Service.SearchService;
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
-import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
-import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
