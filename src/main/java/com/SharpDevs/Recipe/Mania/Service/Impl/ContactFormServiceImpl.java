@@ -1,4 +1,4 @@
-package com.SharpDevs.Recipe.Mania.Service.ServiceImpl;
+package com.SharpDevs.Recipe.Mania.Service.Impl;
 
 import com.SharpDevs.Recipe.Mania.Repository.ContactFormRepository;
 import com.SharpDevs.Recipe.Mania.Service.ContactFormService;
