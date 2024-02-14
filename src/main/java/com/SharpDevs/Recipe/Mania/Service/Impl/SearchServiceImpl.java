@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/main/java/com/SharpDevs/Recipe/Mania/Service/ServiceImpl/SearchServiceImpl.java
 package com.SharpDevs.Recipe.Mania.Service.ServiceImpl;
+=======
+package com.SharpDevs.Recipe.Mania.Service.Impl;
+>>>>>>> 762170b072166f6b1712348c93e6ea13aa161bda:src/main/java/com/SharpDevs/Recipe/Mania/Service/Impl/SearchServiceImpl.java
 
 import com.SharpDevs.Recipe.Mania.Repository.CategoriesRepository;
 import com.SharpDevs.Recipe.Mania.Repository.CategoriesSpecification;
@@ -7,8 +11,6 @@ import com.SharpDevs.Recipe.Mania.Repository.RecipeSpecification;
 import com.SharpDevs.Recipe.Mania.Service.SearchService;
 import com.SharpDevs.Recipe.Mania.domain.DTO.CategoriesDto;
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
-import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
-import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

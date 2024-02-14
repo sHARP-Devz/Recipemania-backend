@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 public class RecipeController {
 
   private final RecipeService recipeService;
-    @PostMapping(path = "/recipe")
-    public ResponseEntity addRecipe(@RequestBody()RecipeDto recipeDto){
-        return new ResponseEntity(recipeService.addRecipe(recipeDto), HttpStatus.CREATED);
+    @PostMapping(path = "/user/recipe/{id}")
+    public ResponseEntity addRecipe(@RequestBody()RecipeDto recipeDto,@PathVariable Long id){
+        return new ResponseEntity(recipeService.addRecipe(id,recipeDto), HttpStatus.CREATED);
     }
 
 @GetMapping(path = "/recipe")

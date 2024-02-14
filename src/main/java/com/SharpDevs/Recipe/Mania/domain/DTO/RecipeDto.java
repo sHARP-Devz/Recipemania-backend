@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class RecipeDto {
 
     private String  id;
+
     private String title;
 
     private String permLink;
@@ -32,4 +33,6 @@ public class RecipeDto {
     private String metaDescription;
 
     private String featured_image;
+
+    private Long categoryId;
 }
