@@ -1,20 +1,27 @@
 package com.SharpDevs.Recipe.Mania.Service.ServiceImpl;
 
+import com.SharpDevs.Recipe.Mania.Exception.FileUploadException;
 import com.SharpDevs.Recipe.Mania.Service.AwsService;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,24 +45,25 @@ public class AwsServiceImpl implements AwsService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public String generateUploadUrl(String filename, HttpMethod http) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.HOUR, 12);
-        URL url = s3Client.generatePresignedUrl(bucketName,filename,cal.getTime(),http);
-        return url.toString();
+    public String saveObjects(MultipartFile file) throws IOException{
+        String s3Key = generateUniqueKey(file.getOriginalFilename());
+        String url = "https://" + bucketName + ".s3.amazonaws.com/" + s3Key;
+
+        try {
+            s3Client.putObject(new PutObjectRequest(bucketName, s3Key, file.getInputStream(),null));
+        } catch (FileUploadException e) {
+            throw new FileUploadException("File unable to upload");
+        }
+
+        return url;
     }
 
-
-    @Override
-    public String generateDownloadUrl(String filename, HttpMethod http) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.HOUR, 160);
-        URL url = s3Client.generatePresignedUrl(bucketName, filename, cal.getTime(), http);
-        return url.toString();
+    private String generateUniqueKey(String filename){
+        String timeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+        String randomLink = UUID.randomUUID().toString().replaceAll("_","").substring(0, 6);
+        return timeStamp + "_" + randomLink +"_" + filename;
     }
+
 
     @Override
     public String deleteFile(String fileName) {
