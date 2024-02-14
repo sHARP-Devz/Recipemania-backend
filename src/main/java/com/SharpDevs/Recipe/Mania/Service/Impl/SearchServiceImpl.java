@@ -1,11 +1,9 @@
 package com.SharpDevs.Recipe.Mania.Service.Impl;
 
 import com.SharpDevs.Recipe.Mania.Repository.CategoriesRepository;
-import com.SharpDevs.Recipe.Mania.Repository.CategoriesSpecification;
 import com.SharpDevs.Recipe.Mania.Repository.RecipeRepository;
 import com.SharpDevs.Recipe.Mania.Repository.RecipeSpecification;
 import com.SharpDevs.Recipe.Mania.Service.SearchService;
-import com.SharpDevs.Recipe.Mania.domain.DTO.CategoryOperationsDto;
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,8 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SearchServiceImpl implements SearchService {
     private final RecipeSpecification recipeSpecification;
-
-    private final CategoriesSpecification categoriesSpecification;
     private final RecipeRepository recipeRepository;
 
     private final CategoriesRepository categoriesRepository;
