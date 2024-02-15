@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class CategoryOperationsDto {
-    private Long id;
-
     private String icons;
 
     private String title;

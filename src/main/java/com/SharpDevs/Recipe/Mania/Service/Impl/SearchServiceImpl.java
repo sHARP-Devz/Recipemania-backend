@@ -1,6 +1,5 @@
 package com.SharpDevs.Recipe.Mania.Service.Impl;
 
-import com.SharpDevs.Recipe.Mania.Repository.CategoriesRepository;
 import com.SharpDevs.Recipe.Mania.Repository.RecipeRepository;
 import com.SharpDevs.Recipe.Mania.Repository.RecipeSpecification;
 import com.SharpDevs.Recipe.Mania.Service.SearchService;
@@ -17,7 +16,6 @@ public class SearchServiceImpl implements SearchService {
     private final RecipeSpecification recipeSpecification;
     private final RecipeRepository recipeRepository;
 
-    private final CategoriesRepository categoriesRepository;
     @Override
     public List<RecipeDto> findAllRecipes(String title) {
         final Specification<RecipeDto> specification = recipeSpecification.filterRecipe(title);
