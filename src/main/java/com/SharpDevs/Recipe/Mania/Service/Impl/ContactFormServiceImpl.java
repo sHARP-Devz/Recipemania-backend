@@ -11,20 +11,29 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ContactFormServiceImpl implements ContactFormService {
 
-    private ContactFormRepository contactFormRepository;
+    private final ContactFormRepository contactFormRepository;
 
     private final EmailService emailService;
 
     @Override
     public ContactFormEntity storeMessage(ContactFormEntity contactForm) {
 
-        ContactFormEntity contactFormEntity = new ContactFormEntity();
-        contactFormEntity.setName(contactForm.getName());
-        contactFormEntity.setEmail(contactForm.getEmail());
-        contactFormEntity.setMessage(contactForm.getMessage());
+        try {
+            ContactFormEntity contactFormEntity = new ContactFormEntity();
+            contactFormEntity.setName(contactForm.getName());
+            contactFormEntity.setEmail(contactForm.getEmail());
+            contactFormEntity.setPhone(contactForm.getPhone());
+            contactFormEntity.setMessage(contactForm.getMessage());
 
-
-        emailService.contactFormMail("tolex20004real@gmail",contactFormEntity.getName(),contactFormEntity.getEmail(), contactFormEntity.getPhone(),contactFormEntity.getMessage());
-        return  contactFormRepository.save(contactFormEntity);
+            emailService.contactFormMail("tolex20004real@gmail.com", contactFormEntity.getName(), contactFormEntity.getEmail(), contactFormEntity.getPhone(), contactFormEntity.getMessage());
+        } catch (RuntimeException e) {
+            ContactFormEntity contactFormEntity = new ContactFormEntity();
+            contactFormEntity.setName(contactForm.getName());
+            contactFormEntity.setEmail(contactForm.getEmail());
+            contactFormEntity.setPhone(contactForm.getPhone());
+            contactFormEntity.setMessage(contactForm.getMessage());
+            return contactFormRepository.save(contactFormEntity);
+        }
+        return contactForm;
     }
 }
