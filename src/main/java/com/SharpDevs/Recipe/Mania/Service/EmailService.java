@@ -15,8 +15,8 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
 
     public void contactFormMail(String to,String name, String email, String phone,String message) {
-        String subject = "Contact Us";
-        String body = "This user " + name + "with phone no " + phone + "and email address is " + email + "\n" + message;
+        String subject = "Contact Us with your Issues";
+        String body = "This user " + name + " with phone no " + phone + " and email address is " + email + "\n" + message;
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(to);

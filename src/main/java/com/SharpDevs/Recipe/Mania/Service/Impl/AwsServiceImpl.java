@@ -5,6 +5,7 @@ import com.SharpDevs.Recipe.Mania.Service.AwsService;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -49,8 +51,10 @@ public class AwsServiceImpl implements AwsService {
         String s3Key = generateUniqueKey(file.getOriginalFilename());
         String url = "https://" + bucketName + ".s3.amazonaws.com/" + s3Key;
 
-        try {
-            s3Client.putObject(new PutObjectRequest(bucketName, s3Key, file.getInputStream(),null));
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(file.getSize());
+        try(InputStream inputStream = file.getInputStream()){
+            s3Client.putObject(new PutObjectRequest(bucketName, s3Key, inputStream,metadata));
         } catch (FileUploadException e) {
             throw new FileUploadException("File unable to upload");
         }
