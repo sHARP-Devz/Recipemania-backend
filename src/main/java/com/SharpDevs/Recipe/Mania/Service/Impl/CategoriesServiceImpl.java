@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CategoriesServiceImpl implements CategoryService {
@@ -23,15 +25,17 @@ public class CategoriesServiceImpl implements CategoryService {
 
     private final Mapper<CategoryEntity, CategoryOperationsDto> categoryOperationsMapper;
 
+    private final Utils utils;
     private final Mapper<CategoryEntity, CategoryDto> categoryMapper;
 
     @Override
     public ResponseEntity<HttpStatus> createCategory(CategoryOperationsDto categoryOperationsDto) throws RuntimeException {
         try {
-            UserEntity foundUser = Utils.getUser(categoryOperationsDto.getUserId(), userRepository);
-            if (foundUser != null) {
+            UserEntity userEntity  = userRepository.findById(categoryOperationsDto.getUserId()).orElse(null);
+            if (userEntity != null) {
                 CategoryEntity newCategory = categoryOperationsMapper.mapFrom(categoryOperationsDto);
-                newCategory.setUser(foundUser);
+                newCategory.setUser(userEntity);
+                System.out.println(newCategory);
                 categoryOperationsDto = categoryOperationsMapper.mapTo(categoryRepository.save(newCategory));
                 return new ResponseEntity(categoryOperationsDto, HttpStatus.CREATED);
             } else {
