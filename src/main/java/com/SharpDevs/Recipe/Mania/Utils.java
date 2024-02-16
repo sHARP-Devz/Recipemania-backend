@@ -5,16 +5,17 @@ import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-
+@RequiredArgsConstructor
 public class Utils {
+    private final UserRepository userRepository;
+    public  UserEntity getUser (Long userId) {
 
-    public static UserEntity getUser (Long userId, UserRepository userRepository) {
-        try {
-            UserEntity user = userRepository.findById(userId).orElse(null);
-            return user;
-        } catch (Exception E) {
-            throw new RuntimeException(E);
-        }
+           Optional<UserEntity> userEntity  = userRepository.findById(userId);
+           if(userEntity.isPresent()) return userEntity.get();
+            else return null;
+
     }
 }

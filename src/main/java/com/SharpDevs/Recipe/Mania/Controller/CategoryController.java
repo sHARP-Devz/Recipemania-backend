@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("/user/category/{userId}")
+    @PostMapping("/user/category")
     public ResponseEntity createCategory(@RequestBody CategoryOperationsDto categoryOperationsDto) {
         return categoryService.createCategory(categoryOperationsDto);
     }

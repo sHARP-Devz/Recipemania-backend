@@ -28,11 +28,12 @@ public class RecipeServiceImpl implements RecipeService  {
    private final CategoryRepository categoryRepository;
 
    private  final RecipeRepository recipeRepository;
+    private final Utils utils;
     @Override
     public ResponseEntity<RecipeDto> addRecipe(Long userId, RecipeDto recipeDto)  {
         try {
             if(userRepository.existsByUserId(userId)){
-                UserEntity existingUser = Utils.getUser(userId, userRepository);
+                UserEntity existingUser = utils.getUser(userId);
                 RecipeEntity recipeEntity = recipeDtoMapper.mapFrom(recipeDto);
                 if (recipeEntity != null) {
                    CategoryEntity foundCategory =  categoryRepository.findById(recipeDto.getCategoryId()).orElse(null);
