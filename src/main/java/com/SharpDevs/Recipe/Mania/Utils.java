@@ -10,8 +10,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class Utils {
-    private final UserRepository userRepository;
-    public  UserEntity getUser (Long userId) {
+
+    public static UserEntity getUser (Long userId, UserRepository userRepository) {
 
            Optional<UserEntity> userEntity  = userRepository.findById(userId);
            if(userEntity.isPresent()) return userEntity.get();

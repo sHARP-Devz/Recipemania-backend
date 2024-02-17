@@ -25,7 +25,6 @@ public class CategoriesServiceImpl implements CategoryService {
 
     private final Mapper<CategoryEntity, CategoryOperationsDto> categoryOperationsMapper;
 
-    private final Utils utils;
     private final Mapper<CategoryEntity, CategoryDto> categoryMapper;
 
     @Override
@@ -52,6 +51,8 @@ public class CategoriesServiceImpl implements CategoryService {
         Iterable<CategoryOperationsDto> categoryDtos = categoryOperationsMapper.mapListTo(categoryEntities);
         return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
     }
+
+
 
     @Override
     public ResponseEntity<CategoryDto> getCategory(Long id) {

@@ -4,8 +4,8 @@ import com.SharpDevs.Recipe.Mania.Repository.CategoryRepository;
 import com.SharpDevs.Recipe.Mania.Repository.RecipeRepository;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.RecipeService;
-import com.SharpDevs.Recipe.Mania.Utils;
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
+import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeOperationsDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.CategoryEntity;
 import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
 import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
@@ -21,28 +21,30 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService  {
 
-   private final Mapper<RecipeEntity,RecipeDto> recipeDtoMapper;
+   private final Mapper<RecipeEntity, RecipeOperationsDto> recipeOperationsMapper;
 
+    private final Mapper<RecipeEntity, RecipeDto> recipeDtoMapper;
    private final UserRepository userRepository;
 
    private final CategoryRepository categoryRepository;
 
    private  final RecipeRepository recipeRepository;
-    private final Utils utils;
+
     @Override
-    public ResponseEntity<RecipeDto> addRecipe(Long userId, RecipeDto recipeDto)  {
+    public ResponseEntity<RecipeDto> addRecipe(RecipeOperationsDto recipeOperationsDto)  {
         try {
+            Long userId = recipeOperationsDto.getUserId();
             if(userRepository.existsByUserId(userId)){
-                UserEntity existingUser = utils.getUser(userId);
-                RecipeEntity recipeEntity = recipeDtoMapper.mapFrom(recipeDto);
+                UserEntity existingUser  = userRepository.findById(recipeOperationsDto.getUserId()).orElse(null);
+                RecipeEntity recipeEntity = recipeOperationsMapper.mapFrom(recipeOperationsDto);
                 if (recipeEntity != null) {
-                   CategoryEntity foundCategory =  categoryRepository.findById(recipeDto.getCategoryId()).orElse(null);
+                   CategoryEntity foundCategory =  categoryRepository.findById(recipeOperationsDto.getCategoryId()).orElse(null);
                     if(foundCategory!=null){
                         recipeEntity.setCategory(foundCategory);
                     }
                    recipeEntity.setUser(existingUser);
                     RecipeEntity  savedRecipeEntity = recipeRepository.save(recipeEntity);
-                    recipeDto =  recipeDtoMapper.mapTo(savedRecipeEntity);
+                   RecipeDto recipeDto =  recipeDtoMapper.mapTo(savedRecipeEntity);
                     return new ResponseEntity<>(recipeDto,HttpStatus.OK);
                 }else{
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -57,43 +59,43 @@ public class RecipeServiceImpl implements RecipeService  {
     }
 
     @Override
-    public ResponseEntity<Iterable<RecipeDto>> getAllRecipe() {
+    public ResponseEntity<Iterable<RecipeOperationsDto>> getAllRecipe() {
         try{
             Iterable<RecipeEntity> allRecipeList = recipeRepository.findAll();
-            return new ResponseEntity<>(recipeDtoMapper.mapListTo(allRecipeList),HttpStatus.OK);
+            return new ResponseEntity<>(recipeOperationsMapper.mapListTo(allRecipeList),HttpStatus.OK);
         }catch (Exception err) {
             throw new RuntimeException("Failed to fetch Recipes");
         }
 
     }
 
-    public ResponseEntity<RecipeDto> getRecipe(Long user_id) {
+    public ResponseEntity<RecipeOperationsDto> getRecipe(Long user_id) {
 
             Optional<RecipeEntity> existingRecipe = recipeRepository.findById(user_id);
         return existingRecipe.map(recipeEntity -> {
-            RecipeDto recipeDto = recipeDtoMapper.mapTo(recipeEntity);
+            RecipeOperationsDto recipeOperationsDto = recipeOperationsMapper.mapTo(recipeEntity);
 
-            return new ResponseEntity<>(recipeDto,HttpStatus.FOUND);
+            return new ResponseEntity<>(recipeOperationsDto,HttpStatus.FOUND);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
         @Override
-    public ResponseEntity<RecipeDto> updateRecipe(Long user_id, RecipeDto recipeDto) {
+    public ResponseEntity<RecipeOperationsDto> updateRecipe(Long user_id, RecipeOperationsDto recipeOperationsDto) {
         if(recipeRepository.existsById(user_id)){
             return recipeRepository.findById(user_id).map(
                     existingRecipe -> {
-                        Optional.ofNullable(recipeDto.getTitle()).ifPresent(existingRecipe::setTitle);
-                        Optional.ofNullable(recipeDto.getDescriptions()).ifPresent(existingRecipe::setDescriptions);
-                        Optional.ofNullable(recipeDto.getCookingTime()).ifPresent(existingRecipe::setCookingTime);
-                        Optional.ofNullable(recipeDto.getDifficult()).ifPresent(existingRecipe::setDifficult);
-                        Optional.ofNullable(recipeDto.getDirection()).ifPresent(existingRecipe::setDirection);
-                        Optional.ofNullable(recipeDto.getServes()).ifPresent(existingRecipe::setServes);
-                        Optional.ofNullable(recipeDto.getMetaDescription()).ifPresent(existingRecipe::setMetaDescription);
-                        Optional.ofNullable(recipeDto.getPermLink()).ifPresent(existingRecipe::setPermLink);
-                        Optional.ofNullable(recipeDto.getVideoLink()).ifPresent(existingRecipe::setVideoLink);
-                        Optional.ofNullable(recipeDto.getPrepareTime()).ifPresent(existingRecipe::setPrepareTime);
+                        Optional.ofNullable(recipeOperationsDto.getTitle()).ifPresent(existingRecipe::setTitle);
+                        Optional.ofNullable(recipeOperationsDto.getDescriptions()).ifPresent(existingRecipe::setDescriptions);
+                        Optional.ofNullable(recipeOperationsDto.getCookingTime()).ifPresent(existingRecipe::setCookingTime);
+                        Optional.ofNullable(recipeOperationsDto.getDifficult()).ifPresent(existingRecipe::setDifficult);
+                        Optional.ofNullable(recipeOperationsDto.getDirection()).ifPresent(existingRecipe::setDirection);
+                        Optional.ofNullable(recipeOperationsDto.getServes()).ifPresent(existingRecipe::setServes);
+                        Optional.ofNullable(recipeOperationsDto.getMetaDescription()).ifPresent(existingRecipe::setMetaDescription);
+                        Optional.ofNullable(recipeOperationsDto.getPermLink()).ifPresent(existingRecipe::setPermLink);
+                        Optional.ofNullable(recipeOperationsDto.getVideoLink()).ifPresent(existingRecipe::setVideoLink);
+                        Optional.ofNullable(recipeOperationsDto.getPrepareTime()).ifPresent(existingRecipe::setPrepareTime);
 
-                        RecipeDto updatedRecipe = recipeDtoMapper.mapTo(recipeRepository.save(existingRecipe));
+                        RecipeOperationsDto updatedRecipe = recipeOperationsMapper.mapTo(recipeRepository.save(existingRecipe));
 
                         return new ResponseEntity<>(updatedRecipe,HttpStatus.OK);
                     }

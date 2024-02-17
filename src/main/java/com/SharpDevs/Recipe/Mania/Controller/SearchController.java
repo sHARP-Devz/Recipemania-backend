@@ -1,7 +1,7 @@
 package com.SharpDevs.Recipe.Mania.Controller;
 
 import com.SharpDevs.Recipe.Mania.Service.SearchService;
-import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
+import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeOperationsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,13 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/filterRecipe")
-    public ResponseEntity<List<RecipeDto>> getRecipes
+    public ResponseEntity<List<RecipeOperationsDto>> getRecipes
             (@RequestParam(required = false) String title){
         return ResponseEntity.ok(searchService.findAllRecipes(title));
     }
 
     @GetMapping("/searchKeyword")
-    public ResponseEntity<List<RecipeDto>> search(@RequestParam String search){
+    public ResponseEntity<List<RecipeOperationsDto>> search(@RequestParam String search){
         return ResponseEntity.ok(searchService.searchRecipe(search));
     }
 
