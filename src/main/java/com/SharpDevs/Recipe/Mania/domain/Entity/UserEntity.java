@@ -1,12 +1,12 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +15,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@Data
 @Entity
-@Table(name="db_user")
+@Table(name = "db_user")
+@Data
 @NoArgsConstructor
 public class UserEntity implements UserDetails {
 
@@ -51,12 +51,13 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<CategoryEntity> categories;
 
-    @OneToMany(mappedBy = "user", fetch =FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<RecipeEntity> recipes;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -92,6 +93,4 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }

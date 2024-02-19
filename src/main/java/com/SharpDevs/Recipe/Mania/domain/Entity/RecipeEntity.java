@@ -1,5 +1,7 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,7 @@ public class RecipeEntity {
     @Column(name = "permlink")
     private String permLink;
 
-    @Column(name = "difficulty")
+    @Column (name = "difficulty")
     private String difficult;
 
     @Column (name = "prepare_time")
@@ -50,6 +52,7 @@ public class RecipeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserEntity user;
 
     @ManyToOne

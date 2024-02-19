@@ -8,8 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BlogsRepository extends CrudRepository<BlogsEntity, Long> {
-    List<BlogsEntity> findAll();
-
-    boolean existsById(Long id);
+public interface BlogsRepository extends JpaRepository<BlogsEntity, Long> {
 }

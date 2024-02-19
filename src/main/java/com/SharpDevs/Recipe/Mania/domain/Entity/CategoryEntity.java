@@ -1,6 +1,7 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -9,12 +10,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "category")
+@Data
+@NoArgsConstructor
 public class CategoryEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,13 +29,22 @@ public class CategoryEntity {
     private String title;
 
     @Column(name = "permLink")
-    @NotBlank(message = "permLink cannot be blank")
+    @NotBlank(message = "PermLink cannot be blank")
     private String permLink;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    @JsonBackReference
     private UserEntity user;
 
-    @OneToMany(mappedBy = "category")
+    @ManyToMany(mappedBy = "categories")
+    @JsonManagedReference
     private Set<RecipeEntity> recipes;
+
+    public CategoryEntity(String icons, String title, String permLink, UserEntity user) {
+        this.icons = icons;
+        this.title = title;
+        this.permLink = permLink;
+        this.user = user;
+    }
 }

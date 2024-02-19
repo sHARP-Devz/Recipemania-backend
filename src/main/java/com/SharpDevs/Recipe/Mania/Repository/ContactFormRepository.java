@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface ContactFormRepository extends CrudRepository<ContactFormEntity, Long> {
+public interface ContactFormRepository extends JpaRepository<ContactFormEntity, Long> {
 
-    Boolean existsByEmail(String email);
+//    Boolean existsByEmail(String email);
 }

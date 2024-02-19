@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface NewsletterRepository extends CrudRepository<NewsletterEntity, Long> {
+public interface NewsletterRepository extends JpaRepository<NewsletterEntity, Long> {
 
 
 
 
-    @Override
-    Optional<NewsletterEntity> findById(Long id);
+//    @Override
+//    Optional<NewsletterEntity> findById(Long id);
+//
+//    List<NewsletterEntity> findAll();
 
-    List<NewsletterEntity> findAll();
-
-    Optional<NewsletterEntity> findByEmail(String email);
+//    Optional<NewsletterEntity> findByEmail(String email);
 
     Boolean existsByEmail(String email);
 

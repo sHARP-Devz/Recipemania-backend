@@ -34,13 +34,13 @@ public class RecipeServiceImpl implements RecipeService  {
     public ResponseEntity<RecipeDto> addRecipe(RecipeOperationsDto recipeOperationsDto)  {
         try {
             Long userId = recipeOperationsDto.getUserId();
-            if(userRepository.existsByUserId(userId)){
+            if(userRepository.existsById(userId)){
                 UserEntity existingUser  = userRepository.findById(recipeOperationsDto.getUserId()).orElse(null);
                 RecipeEntity recipeEntity = recipeOperationsMapper.mapFrom(recipeOperationsDto);
                 if (recipeEntity != null) {
                    CategoryEntity foundCategory =  categoryRepository.findById(recipeOperationsDto.getCategoryId()).orElse(null);
                     if(foundCategory!=null){
-                        recipeEntity.setCategory(foundCategory);
+//                        recipeEntity.setCategory(foundCategory);
                     }
                    recipeEntity.setUser(existingUser);
                     RecipeEntity  savedRecipeEntity = recipeRepository.save(recipeEntity);
