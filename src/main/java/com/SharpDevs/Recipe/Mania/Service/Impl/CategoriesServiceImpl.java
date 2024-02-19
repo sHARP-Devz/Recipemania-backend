@@ -30,19 +30,19 @@ public class CategoriesServiceImpl implements CategoryService {
     @Override
     public ResponseEntity<HttpStatus> createCategory(CategoryOperationsDto categoryOperationsDto) throws RuntimeException {
         try {
-            UserEntity userEntity  = userRepository.findById(categoryOperationsDto.getUserId()).orElse(null);
-            if (userEntity != null) {
-                CategoryEntity newCategory = categoryOperationsMapper.mapFrom(categoryOperationsDto);
-                newCategory.setUser(userEntity);
-                System.out.println(newCategory);
-                categoryOperationsDto = categoryOperationsMapper.mapTo(categoryRepository.save(newCategory));
-                return new ResponseEntity(categoryOperationsDto, HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            UserEntity userEntity  = userRepository.findById(1L).orElse(null);
+//            if (userEntity != null) {
+//                CategoryEntity newCategory = categoryOperationsMapper.mapFrom(categoryOperationsDto);
+//                newCategory.setUser(userEntity);
+//                System.out.println(newCategory);
+//                categoryOperationsDto = categoryOperationsMapper.mapTo(categoryRepository.save(newCategory));
+//                return new ResponseEntity(categoryOperationsDto, HttpStatus.CREATED);
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
         } catch (Exception err) {
             throw new RuntimeException(err + "Error while creating Category");
-        }
+        } return null;
     }
 
     @Override

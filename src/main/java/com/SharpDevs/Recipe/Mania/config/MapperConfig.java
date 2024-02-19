@@ -21,13 +21,8 @@ public class MapperConfig {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-//        modelMapper.createTypeMap(RecipeOperationsDto.class, RecipeEntity.class)
-//                .addMapping(src -> src.getUserId(), (dest, value) -> dest.getUser().setUserId((Long) value))
-//                .addMapping(src -> src.getCategoryId(), (dest, value) -> {
-//                    if (value != null) {
-//                        dest.setCategory(categoryRepository.findById((Long) value).orElse(null));
-//                    }
-//                });
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
 
         return modelMapper;
     }
