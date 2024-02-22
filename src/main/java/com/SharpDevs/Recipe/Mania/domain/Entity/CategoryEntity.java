@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "category")
-@Data
-@NoArgsConstructor
 public class CategoryEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -29,7 +29,7 @@ public class CategoryEntity {
     private String title;
 
     @Column(name = "permLink")
-    @NotBlank(message = "PermLink cannot be blank")
+    @NotBlank(message = "permLink cannot be blank")
     private String permLink;
 
     @ManyToOne
@@ -37,14 +37,4 @@ public class CategoryEntity {
     @JsonBackReference
     private UserEntity user;
 
-    @ManyToMany(mappedBy = "categories")
-    @JsonManagedReference
-    private Set<RecipeEntity> recipes;
-
-    public CategoryEntity(String icons, String title, String permLink, UserEntity user) {
-        this.icons = icons;
-        this.title = title;
-        this.permLink = permLink;
-        this.user = user;
-    }
 }

@@ -40,9 +40,8 @@ public class RecipeServiceImpl implements RecipeService  {
                 if (recipeEntity != null) {
                    CategoryEntity foundCategory =  categoryRepository.findById(recipeOperationsDto.getCategoryId()).orElse(null);
                     if(foundCategory!=null){
-//                        recipeEntity.setCategory(foundCategory);
+                        recipeEntity.setCategory(foundCategory);
                     }
-                   recipeEntity.setUser(existingUser);
                     RecipeEntity  savedRecipeEntity = recipeRepository.save(recipeEntity);
                    RecipeDto recipeDto =  recipeDtoMapper.mapTo(savedRecipeEntity);
                     return new ResponseEntity<>(recipeDto,HttpStatus.OK);

@@ -34,7 +34,6 @@ public class CategoriesServiceImpl implements CategoryService {
             if (userEntity != null) {
                 CategoryEntity newCategory = categoryOperationsMapper.mapFrom(categoryOperationsDto);
                 newCategory.setUser(userEntity);
-                System.out.println(newCategory);
                 categoryOperationsDto = categoryOperationsMapper.mapTo(categoryRepository.save(newCategory));
                 return new ResponseEntity(categoryOperationsDto, HttpStatus.CREATED);
             } else {

@@ -1,5 +1,6 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +17,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "db_user")
 @Data
+@Entity
+@Table(name="db_user")
 @NoArgsConstructor
 public class UserEntity implements UserDetails {
 
@@ -32,10 +34,10 @@ public class UserEntity implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email" , unique = true)
+    @Column(name = "email", unique = true)
     @NotNull(message = "email can't be null")
     @NotBlank(message = " email cannot be blank")
-    private  String email;
+    private String email;
 
     @Column(name = "password")
     @JsonIgnore
@@ -44,24 +46,18 @@ public class UserEntity implements UserDetails {
     @Column(name = "country")
     private String country;
 
-    @Column (name = "description")
-    private String  description;
+    @Column(name = "description")
+    private String description;
 
-    @Column (name = "role")
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<CategoryEntity> categories;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<RecipeEntity> recipes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return
+                List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
