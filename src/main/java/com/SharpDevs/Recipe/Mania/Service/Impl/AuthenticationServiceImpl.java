@@ -45,7 +45,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
             UserEntity userEntity = signUpMapper.mapFrom(signUpDto);
             userEntity.setRole(Role.USER);
-            System.out.println(userEntity);
             userRepository.save(userEntity);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception error) {
