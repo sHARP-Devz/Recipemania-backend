@@ -1,7 +1,7 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,33 +25,36 @@ public class RecipeEntity {
     @Column(name = "difficulty")
     private String difficult;
 
-    @Column (name = "prepare_time")
+    @Column(name = "prepare_time")
     private String prepareTime;
 
-    @Column (name = "cooking_time")
+    @Column(name = "cooking_time")
     private String cookingTime;
 
-    @Column (name ="serves")
+    @Column(name ="serves")
     private String serves;
 
-    @Column (name = "description")
+    @Column(name = "description")
     private String descriptions;
 
-    @Column (name = "video_link")
+    @Column(name = "video_link")
     private String videoLink;
 
-    @Column (name = "direction")
+    @Column(name = "direction")
     private String direction;
 
-    @Column (name = "meta_description")
+    @Column(name = "meta_description")
     private String metaDescription;
 
-    @Column (name = "featured_image")
+    @Column(name = "featured_image")
     private String featured_image;
 
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user", referencedColumnName =  "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 }

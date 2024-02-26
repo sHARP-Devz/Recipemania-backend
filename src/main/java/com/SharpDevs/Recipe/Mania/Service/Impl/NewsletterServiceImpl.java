@@ -1,4 +1,4 @@
-package com.SharpDevs.Recipe.Mania.Service.ServiceImpl;
+package com.SharpDevs.Recipe.Mania.Service.Impl;
 
 import com.SharpDevs.Recipe.Mania.Repository.NewsletterRepository;
 import com.SharpDevs.Recipe.Mania.Service.NewsletterService;
@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

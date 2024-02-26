@@ -29,8 +29,8 @@ public class SecurityConfiguration{
     private final PasswordEncoderConfig passwordEncoderConfig;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.csrf(AbstractHttpConfigurer :: disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**","/api/v1/recipe/**")
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**", "/api/v1/recipe/**", "/api/v1/category/**","/api/v1/contactform/**")
                         .permitAll()
                         .requestMatchers("/api/v1/user/**").hasAnyAuthority(Role.USER.name())
                         .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name())

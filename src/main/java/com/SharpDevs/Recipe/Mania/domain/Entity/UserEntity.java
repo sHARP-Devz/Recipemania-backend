@@ -1,6 +1,8 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +25,7 @@ public class UserEntity implements UserDetails {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long userId;
 
     @Column(name = "first_name")
@@ -32,10 +34,10 @@ public class UserEntity implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email" , unique = true)
+    @Column(name = "email", unique = true)
     @NotNull(message = "email can't be null")
     @NotBlank(message = " email cannot be blank")
-    private  String email;
+    private String email;
 
     @Column(name = "password")
     @JsonIgnore
@@ -44,20 +46,18 @@ public class UserEntity implements UserDetails {
     @Column(name = "country")
     private String country;
 
-    @Column (name = "description")
-    private String  description;
+    @Column(name = "description")
+    private String description;
 
-    @Column (name = "role")
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
-    @JoinColumn(name = "recipe" ,referencedColumnName = "id")
-    private Set<RecipeEntity> recipe;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return
+                List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
@@ -89,6 +89,4 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }

@@ -1,16 +1,15 @@
 package com.SharpDevs.Recipe.Mania.domain.DTO;
 
-import com.SharpDevs.Recipe.Mania.domain.Entity.CategoryEntity;
-import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
+@AllArgsConstructor
 @RequiredArgsConstructor
-public class RecipeDto {
+public class RecipeOperationsDto {
 
-    private Long id;
+    private String  id;
 
     private String title;
 
@@ -34,7 +33,7 @@ public class RecipeDto {
 
     private String featured_image;
 
-    private UserEntity user;
+    private Long categoryId;
 
-    private CategoryEntity category;
+    private Long userId;
 }

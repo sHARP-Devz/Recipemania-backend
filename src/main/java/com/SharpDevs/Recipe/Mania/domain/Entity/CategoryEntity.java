@@ -1,30 +1,30 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categories")
-public class CategoriesEntity {
+@Table(name = "category")
+public class CategoryEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "icons")
     @NotBlank(message = "Icons cannot be blank")
     private String icons;
 
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     @NotBlank(message = "Title cannot be blank")
     private String title;
 
@@ -32,7 +32,9 @@ public class CategoriesEntity {
     @NotBlank(message = "permLink cannot be blank")
     private String permLink;
 
-    @OneToMany( mappedBy = "RecipeEntity")
-    @JoinColumn(name ="recipe",referencedColumnName = "id")
-    private List<RecipeEntity> recipeEntity;
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    @JsonBackReference
+    private UserEntity user;
+
 }

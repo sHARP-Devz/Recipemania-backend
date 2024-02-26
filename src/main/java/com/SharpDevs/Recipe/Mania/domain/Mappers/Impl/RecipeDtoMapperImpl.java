@@ -1,5 +1,7 @@
 package com.SharpDevs.Recipe.Mania.domain.Mappers.Impl;
 
+import com.SharpDevs.Recipe.Mania.Repository.CategoryRepository;
+import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.RecipeEntity;
 import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
@@ -12,13 +14,15 @@ import java.util.stream.StreamSupport;
 
 @Component
 @RequiredArgsConstructor
-public class RecipeMapperImpl implements Mapper<RecipeEntity, RecipeDto> {
+public class RecipeDtoMapperImpl implements Mapper<RecipeEntity, RecipeDto> {
 
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public RecipeDto mapTo(RecipeEntity recipeEntity) {
-        return modelMapper.map(recipeEntity,RecipeDto.class);
+        return modelMapper.map(recipeEntity, RecipeDto.class);
     }
 
     @Override
@@ -30,7 +34,7 @@ public class RecipeMapperImpl implements Mapper<RecipeEntity, RecipeDto> {
     public Iterable<RecipeDto> mapListTo(Iterable<RecipeEntity> recipeEntityIterable) {
         return StreamSupport.stream(recipeEntityIterable.spliterator(),false)
                 .map(recipeEntity ->
-                    modelMapper.map(recipeEntity, RecipeDto.class)
+                        modelMapper.map(recipeEntity, RecipeDto.class)
                 ).collect(Collectors.toList());
     }
 
@@ -38,3 +42,4 @@ public class RecipeMapperImpl implements Mapper<RecipeEntity, RecipeDto> {
 
 
 }
+
