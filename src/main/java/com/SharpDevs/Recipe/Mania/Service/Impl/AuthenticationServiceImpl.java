@@ -1,6 +1,7 @@
 package com.SharpDevs.Recipe.Mania.Service.Impl;
 
 import com.SharpDevs.Recipe.Mania.Exception.EmailNotFoundException;
+import com.SharpDevs.Recipe.Mania.Exception.UserAlreadyExistsException;
 import com.SharpDevs.Recipe.Mania.Exception.UserNotFoundException;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.AuthenticationService;
@@ -42,6 +43,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override 
     public ResponseEntity signUp(SignUpDto signUpDto) {
         try {
+            if(userRepository.existsByEmail(signUpDto.getEmail())){
+                throw new UserAlreadyExistsException("There is an account associated with this email already");
+            }
+
             signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
             UserEntity userEntity = signUpMapper.mapFrom(signUpDto);
             userEntity.setRole(Role.USER);

@@ -34,12 +34,19 @@ public class UserEntity implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "user_name")
+    @NotNull(message = "Username cannot be empty")
+    @NotBlank(message = "User Name cannot be Blank")
+    private String userName;
+
     @Column(name = "email", unique = true)
     @NotNull(message = "email can't be null")
     @NotBlank(message = " email cannot be blank")
     private String email;
 
     @Column(name = "password")
+    @NotNull(message = "Password can't be null")
+    @NotBlank(message = " Pssword cannot be blank")
     @JsonIgnore
     private String password;
 
