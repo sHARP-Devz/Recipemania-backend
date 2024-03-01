@@ -26,7 +26,7 @@ public class NewsletterController {
 
     private final NewsletterRepository newsletterRepository;
 
-    @PostMapping("newsletter/user/create")
+    @PostMapping("newsletter/create")
     public ResponseEntity<NewsletterEntity> saveEmail(@Valid @RequestBody NewsletterDto newsletterDto, BindingResult result) {
         if (result.hasErrors()) {
             ResponseEntity.badRequest().body("Input a Valid email or Email exists");
@@ -34,12 +34,12 @@ public class NewsletterController {
         return newsletterService.saveEmail(newsletterDto);
     }
 
-    @GetMapping("newsletter/admin/retrieve")
+    @GetMapping("/admin/newsletter/retrieve")
     public ResponseEntity<Iterable<NewsletterDto>> getAllNewsletterEmails() {
         return newsletterService.getAllNewsletter();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/newsletter//{id}")
     public ResponseEntity<HttpStatus> deleteEmail(@PathVariable Long id,@Valid @RequestBody NewsletterDto newsletterDto) throws EmailNotFoundException {
         if (newsletterRepository.existsByEmail(newsletterDto.getEmail())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
