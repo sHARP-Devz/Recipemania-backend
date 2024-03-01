@@ -10,17 +10,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SignUpDto {
 
-    private String firstName;
+    private String userName;
 
-    private String lastName;
-
-    private  String email;
+    private String email;
 
     private String password;
 
-    private String country;
-
-    private String  description;
-
-    private Role role;
 }
+
+

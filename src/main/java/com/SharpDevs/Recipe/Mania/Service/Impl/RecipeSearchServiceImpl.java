@@ -22,7 +22,7 @@ public class RecipeSearchServiceImpl implements RecipeSearchService {
     public List<RecipeDto> searchRecipes (String search){
         final Specification<RecipeDto> specification = recipeSpecification.searchRecipe(search);
         final List<RecipeDto> recipeOperations = recipeRepository.findAll(specification);
-        System.out.println("here" + recipeOperations);
+
         return recipeOperations;
     }
 }
