@@ -18,29 +18,31 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/newsletter")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/v1")
 public class NewsletterController {
 
     private final NewsletterService newsletterService;
 
     private final NewsletterRepository newsletterRepository;
 
-    @PostMapping("/create")
+    @PostMapping("newsletter/create")
     public ResponseEntity<NewsletterEntity> saveEmail(@Valid @RequestBody NewsletterDto newsletterDto, BindingResult result) {
         if (result.hasErrors()) {
             ResponseEntity.badRequest().body("Input a Valid email or Email exists");
         }
-        return newsletterService.saveEmail(newsletterDto);
+        return new ResponseEntity(newsletterService.saveEmail(newsletterDto).getStatusCode());
     }
 
-    @GetMapping("/retrieve")
+    @GetMapping("/admin/newsletter/retrieve")
     public ResponseEntity<Iterable<NewsletterDto>> getAllNewsletterEmails() {
         return newsletterService.getAllNewsletter();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteEmail(@PathVariable Long id) throws EmailNotFoundException {
+    @DeleteMapping("/admin/newsletter//{id}")
+    public ResponseEntity<HttpStatus> deleteEmail(@PathVariable Long id,@Valid @RequestBody NewsletterDto newsletterDto) throws EmailNotFoundException {
+        if (newsletterRepository.existsByEmail(newsletterDto.getEmail())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         System.out.println("---------------");
         NewsletterEntity newsletter = newsletterRepository.findById(id)
                 .orElseThrow(() -> new EmailNotFoundException("Email not Found"));

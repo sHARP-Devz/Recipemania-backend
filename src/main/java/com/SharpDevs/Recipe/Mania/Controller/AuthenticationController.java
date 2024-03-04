@@ -19,7 +19,7 @@ public class AuthenticationController {
 
     @PostMapping(path="/register")
     public ResponseEntity register(@RequestBody SignUpDto signUpDto){
-       ;return  authenticationService.signUp(signUpDto);
+       return  authenticationService.signUp(signUpDto);
     }
     @PostMapping(path="/signin")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest){
@@ -31,7 +31,7 @@ public class AuthenticationController {
         String mail = authenticationService.checkMail(email);
 
        if(mail == null){
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+           return new ResponseEntity<>(HttpStatus.FOUND);
        }else{
            return new ResponseEntity<>(mail,HttpStatus.FOUND);
        }

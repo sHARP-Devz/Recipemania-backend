@@ -3,6 +3,7 @@ package com.SharpDevs.Recipe.Mania.Repository;
 import com.SharpDevs.Recipe.Mania.domain.DTO.NewsletterDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.NewsletterEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,12 +15,12 @@ public interface NewsletterRepository extends JpaRepository<NewsletterEntity, Lo
 
 
 
-    @Override
-    Optional<NewsletterEntity> findById(Long id);
+//    @Override
+//    Optional<NewsletterEntity> findById(Long id);
+//
+//    List<NewsletterEntity> findAll();
 
-    List<NewsletterEntity> findAll();
-
-    Optional<NewsletterEntity> findByEmail(String email);
+//    Optional<NewsletterEntity> findByEmail(String email);
 
     Boolean existsByEmail(String email);
 

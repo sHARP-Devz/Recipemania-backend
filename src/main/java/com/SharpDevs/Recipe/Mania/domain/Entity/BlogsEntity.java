@@ -27,11 +27,13 @@ public class BlogsEntity {
 
     @Column(name = "updated")
     @NotBlank(message = "updated cannot be blank")
+
     private Date updated;
 
     @Column(name = "title")
     @NotBlank(message = "Title cannot be blank")
-    private String title;
+    private String title ="test";
+
 
     @Column(name = "permLink")
     @NotBlank(message = "permLink cannot be blank")

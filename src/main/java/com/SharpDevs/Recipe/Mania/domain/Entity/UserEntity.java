@@ -1,6 +1,8 @@
 package com.SharpDevs.Recipe.Mania.domain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -31,29 +34,37 @@ public class UserEntity implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email" , unique = true)
+    @Column(name = "user_name")
+    @NotNull(message = "Username cannot be empty")
+    @NotBlank(message = "User Name cannot be Blank")
+    private String userName;
+
+    @Column(name = "email", unique = true)
     @NotNull(message = "email can't be null")
     @NotBlank(message = " email cannot be blank")
-    private  String email;
+    private String email;
 
     @Column(name = "password")
+    @NotNull(message = "Password can't be null")
+    @NotBlank(message = " Pssword cannot be blank")
     @JsonIgnore
     private String password;
 
     @Column(name = "country")
     private String country;
 
-    @Column (name = "description")
-    private String  description;
+    @Column(name = "description")
+    private String description;
 
-    @Column (name = "role")
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return
+                List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
@@ -85,6 +96,4 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }
