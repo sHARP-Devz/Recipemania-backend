@@ -16,7 +16,7 @@ public class SearchController {
 
     private final RecipeSearchService searchService;
 
-    @GetMapping("/user/recipe/search")
+    @GetMapping("/user/recipe/search?search=")
     public ResponseEntity<Iterable<RecipeOperationsDto>> search(@RequestParam String search){
         Iterable<RecipeOperationsDto> recipeOperations = searchService.searchRecipes(search);
         return ResponseEntity.ok(recipeOperations);

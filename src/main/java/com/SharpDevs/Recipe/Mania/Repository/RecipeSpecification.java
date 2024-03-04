@@ -21,8 +21,6 @@ public class RecipeSpecification {
             };
         }
 
-//        public static String likePattern(String value){
-//            return "%" + value.toLowerCase() + "%";
-//        }
+
     }
 
