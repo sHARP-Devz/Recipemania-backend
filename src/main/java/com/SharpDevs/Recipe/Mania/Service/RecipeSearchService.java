@@ -1,10 +1,8 @@
 package com.SharpDevs.Recipe.Mania.Service;
 
-import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeDto;
-
-import java.util.List;
+import com.SharpDevs.Recipe.Mania.domain.DTO.RecipeOperationsDto;
 
 public interface RecipeSearchService {
 
-    List<RecipeDto> searchRecipes(String search);
+    Iterable<RecipeOperationsDto> searchRecipes(String search);
 }

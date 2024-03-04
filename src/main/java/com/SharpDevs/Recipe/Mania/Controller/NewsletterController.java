@@ -19,7 +19,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "*")
 public class NewsletterController {
 
     private final NewsletterService newsletterService;
@@ -31,7 +30,7 @@ public class NewsletterController {
         if (result.hasErrors()) {
             ResponseEntity.badRequest().body("Input a Valid email or Email exists");
         }
-        return newsletterService.saveEmail(newsletterDto);
+        return new ResponseEntity(newsletterService.saveEmail(newsletterDto).getStatusCode());
     }
 
     @GetMapping("/admin/newsletter/retrieve")
