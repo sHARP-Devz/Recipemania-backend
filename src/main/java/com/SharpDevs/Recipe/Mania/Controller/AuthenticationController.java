@@ -19,7 +19,7 @@ public class AuthenticationController {
 
     @PostMapping(path="/register")
     public ResponseEntity register(@RequestBody SignUpDto signUpDto){
-       ;return  authenticationService.signUp(signUpDto);
+       return  authenticationService.signUp(signUpDto);
     }
     @PostMapping(path="/signin")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest){
