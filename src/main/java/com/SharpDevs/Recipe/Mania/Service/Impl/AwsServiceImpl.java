@@ -56,7 +56,7 @@ public class AwsServiceImpl implements AwsService {
         try(InputStream inputStream = file.getInputStream()){
             s3Client.putObject(new PutObjectRequest(bucketName, s3Key, inputStream,metadata));
         } catch (FileUploadException e) {
-            throw new FileUploadException("File unable to upload");
+            throw new FileUploadException("File" + file + "unable to upload");
         }
 
         return url;
