@@ -42,18 +42,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override 
     public ResponseEntity signUp(SignUpDto signUpDto) {
-        try {
+
             if(userRepository.existsByEmail(signUpDto.getEmail())){
                 throw new UserAlreadyExistsException("There is an account associated with this email already");
             }
-
+            if(userRepository.existsByUserName(signUpDto.getUserName())){
+                throw new UserAlreadyExistsException("There is an account with this username.");
+            }
+        try {
             signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
             UserEntity userEntity = signUpMapper.mapFrom(signUpDto);
             userEntity.setRole(Role.USER);
             userRepository.save(userEntity);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception error) {
-            System.out.println(error);
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

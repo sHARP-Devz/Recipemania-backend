@@ -3,6 +3,7 @@ package com.SharpDevs.Recipe.Mania.Service.Impl;
 import com.SharpDevs.Recipe.Mania.Repository.CategoryRepository;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.CategoryService;
+import com.SharpDevs.Recipe.Mania.Service.JWTService;
 import com.SharpDevs.Recipe.Mania.domain.DTO.CategoryDto;
 import com.SharpDevs.Recipe.Mania.domain.DTO.CategoryOperationsDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.CategoryEntity;
@@ -26,10 +27,13 @@ public class CategoriesServiceImpl implements CategoryService {
 
     private final Mapper<CategoryEntity, CategoryDto> categoryMapper;
 
+    private final JWTService jwtService;
+
     @Override
     public ResponseEntity<HttpStatus> createCategory(CategoryOperationsDto categoryOperationsDto) throws RuntimeException {
         try {
-            UserEntity userEntity  = userRepository.findById(categoryOperationsDto.getUserId()).orElse(null);
+            Long userId = jwtService.getUserId();
+            UserEntity userEntity  = userRepository.findById(userId).orElse(null);
             if (userEntity != null) {
                 CategoryEntity newCategory = categoryOperationsMapper.mapFrom(categoryOperationsDto);
                 newCategory.setUser(userEntity);

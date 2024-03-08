@@ -1,6 +1,7 @@
 package com.SharpDevs.Recipe.Mania.Service.Impl;
 
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
+import com.SharpDevs.Recipe.Mania.Service.JWTService;
 import com.SharpDevs.Recipe.Mania.Service.UserService;
 import com.SharpDevs.Recipe.Mania.domain.DTO.ChangePasswordRequest;
 import com.SharpDevs.Recipe.Mania.domain.DTO.UserDto;
@@ -9,6 +10,7 @@ import com.SharpDevs.Recipe.Mania.domain.Mappers.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +27,8 @@ public class UserServiceImpl implements UserService {
 
     private final Mapper<UserEntity, UserDto> userMapper;
 
+    private final JWTService jwtService;
+
     private final PasswordEncoder passwordEncoder;
     @Override
     public UserDetailsService userDetailsService() {
@@ -40,26 +44,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<UserDto> updateUser(UserDto userDto, Long id) {
 
-        if (userRepository.existsById(id)) {
-            return userRepository.findById(id).map(
-                    existingUser -> {
+//        if (userRepository.existsById(id)) {
+//            return userRepository.findById(id).map(
+//                    existingUser -> {
+//
+//                        Optional.ofNullable(userDto.getFirstName()).ifPresent(existingUser::setFirstName);
+//                        Optional.ofNullable(userDto.getLastName()).ifPresent(existingUser::setLastName);
+//                        Optional.ofNullable(userDto.getDescription()).ifPresent(existingUser::setDescription);
+//                        Optional.ofNullable(userDto.getCountry()).ifPresent(existingUser::setCountry);
+//
+//                        System.out.println(existingUser);
+//
+//                        UserDto savedUserDto = userMapper.mapTo(userRepository.save(existingUser));
 
-                        Optional.ofNullable(userDto.getFirstName()).ifPresent(existingUser::setFirstName);
-                        Optional.ofNullable(userDto.getLastName()).ifPresent(existingUser::setLastName);
-                        Optional.ofNullable(userDto.getDescription()).ifPresent(existingUser::setDescription);
-                        Optional.ofNullable(userDto.getCountry()).ifPresent(existingUser::setCountry);
-
-                        System.out.println(existingUser);
-
-                        UserDto savedUserDto = userMapper.mapTo(userRepository.save(existingUser));
-
-                        return new ResponseEntity<>(savedUserDto, HttpStatus.OK);
-                    }
-            ).orElseThrow(() -> new RuntimeException("User Did Not Update"));
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
+//                        return new ResponseEntity<>(savedUserDto, HttpStatus.OK);
+//                    }
+//            ).orElseThrow(() -> new RuntimeException("User Did Not Update"));
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Override

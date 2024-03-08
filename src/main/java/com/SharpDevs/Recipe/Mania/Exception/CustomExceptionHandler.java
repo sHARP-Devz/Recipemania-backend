@@ -25,6 +25,13 @@ public class CustomExceptionHandler {
         String errorMessage = ex.getMessage();
         return new ResponseEntity<>(createErrorResponse(errorMessage),HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(FileUploadException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Object> handleFileUploadException(Exception ex){
+        String errorMessage = ex.getMessage();
+        return new ResponseEntity<>(createErrorResponse(errorMessage),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleOtherExceptions(Exception ex) {
         String errorMessage = "An error occurred while processing the request.";
