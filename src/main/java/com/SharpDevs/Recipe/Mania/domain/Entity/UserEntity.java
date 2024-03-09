@@ -34,7 +34,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     @NotNull(message = "Username cannot be empty")
     @NotBlank(message = "User Name cannot be Blank")
     private String userName;

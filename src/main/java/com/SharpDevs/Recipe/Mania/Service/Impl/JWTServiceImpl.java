@@ -1,6 +1,7 @@
 package com.SharpDevs.Recipe.Mania.Service.Impl;
 
 import com.SharpDevs.Recipe.Mania.Service.JWTService;
+import com.SharpDevs.Recipe.Mania.domain.Entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -8,6 +9,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +63,16 @@ public class JWTServiceImpl implements JWTService {
     @Override
     public Boolean isTokenExpired(String token) {
         return extractClaim(token, Claims::getExpiration).before(new Date());
+    }
+
+    @Override
+    public Long getUserId() {
+        UserEntity user = (UserEntity) SecurityContextHolder
+                .getContext().
+                getAuthentication()
+                .getPrincipal();
+
+        return user.getUserId();
     }
 
 

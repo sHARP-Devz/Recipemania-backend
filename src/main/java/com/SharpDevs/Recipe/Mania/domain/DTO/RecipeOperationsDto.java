@@ -3,6 +3,7 @@ package com.SharpDevs.Recipe.Mania.domain.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -31,9 +32,11 @@ public class RecipeOperationsDto {
 
     private String metaDescription;
 
-    private String featured_image;
+    private MultipartFile featuredImage;
 
     private Long categoryId;
 
     private Long userId;
+
+
 }

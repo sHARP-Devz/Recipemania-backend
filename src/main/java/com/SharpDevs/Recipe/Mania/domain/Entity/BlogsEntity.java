@@ -19,6 +19,7 @@ import java.util.Date;
 public class BlogsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @Column(name = "created")
