@@ -30,11 +30,9 @@ public class CommentEntity {
     @NotBlank(message  = "Content Cannot be Blank")
     private String content;
 
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany
-    @JoinColumn(name = "replies")
+    @Column(name = "replies")
     private Set<CommentReply> replies;
 }
