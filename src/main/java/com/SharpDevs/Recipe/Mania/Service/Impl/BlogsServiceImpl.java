@@ -8,13 +8,7 @@ public class BlogsServiceImpl  implements BlogsService {
 
     @Override
     public ResponseEntity createPost(BlogsDto blogDto) {
-        try {
-
-            return null;
-        } catch (Exception ex) {
-
-        }
-        return null;
+      return null;
     }
 
     @Override
