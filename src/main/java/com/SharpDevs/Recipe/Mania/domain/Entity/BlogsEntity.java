@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "Blogs")
+@Table(name = "Blog")
 public class BlogsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,6 @@ public class BlogsEntity {
     @Column(name = "title")
     @NotBlank(message = "Title cannot be blank")
     private String title ="test";
-
 
     @Column(name = "permLink")
     @NotBlank(message = "permLink cannot be blank")
@@ -55,5 +54,7 @@ public class BlogsEntity {
     @Column(name = "metaDescription")
     @NotBlank(message = "metaDescription cannot be blank")
     private String metaDescription;
+
+
 }
 
