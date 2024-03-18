@@ -3,7 +3,6 @@ package com.SharpDevs.Recipe.Mania.Service.Impl;
 import com.SharpDevs.Recipe.Mania.Repository.CategoryRepository;
 import com.SharpDevs.Recipe.Mania.Repository.UserRepository;
 import com.SharpDevs.Recipe.Mania.Service.CategoryService;
-import com.SharpDevs.Recipe.Mania.Utils;
 import com.SharpDevs.Recipe.Mania.domain.DTO.CategoryDto;
 import com.SharpDevs.Recipe.Mania.domain.DTO.CategoryOperationsDto;
 import com.SharpDevs.Recipe.Mania.domain.Entity.CategoryEntity;
