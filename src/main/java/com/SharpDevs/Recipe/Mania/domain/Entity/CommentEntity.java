@@ -33,6 +33,7 @@ public class CommentEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @Column(name = "replies")
-    private Set<CommentReply> replies;
+//    @Column(name = "replies")
+//    @OneToMany
+//    private Set<CommentReply> replies;
 }

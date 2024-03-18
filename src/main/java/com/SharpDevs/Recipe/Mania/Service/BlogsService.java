@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 public interface BlogsService {
     ResponseEntity createPost(BlogsDto blogDto);
 
-    ResponseEntity editPost(BlogsDto blogDto);
+    ResponseEntity editPost(Long blogId, BlogsDto blogDto);
 }

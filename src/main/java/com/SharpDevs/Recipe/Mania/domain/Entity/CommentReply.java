@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
-
-@Entity
-@Table
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+//
+//@Entity
+//@Table
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class CommentReply extends CommentEntity{
 
     private Long comment_id;
